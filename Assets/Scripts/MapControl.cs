@@ -50,6 +50,37 @@ public class MapControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Create player inputs
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            // Runs if no zone has been selected
+            if (selectedZone == 0)
+            {
+                selectedZone = currentColumn + currentRow * 2 + 1;
+                baseOffsetX = baseOffset - currentRow * squareSize;
+                baseOffsetZ = baseOffset - currentColumn * squareSize;
+                currentRow = 0;
+                currentColumn = -1;
+                selector.transform.localScale = new Vector3(1, 1, 1);
+            }
+            // If no column has been selected yet, select a column
+            else if (selectedColumn < 0)
+            {
+                selectedColumn = currentColumn + (selectedZone - 1) % 2 * 5;
+                currentRow -= 1;
+            }
+            // If no row has been selected yet, select a row
+            else if (selectedRow < 0)
+            {
+                selectedRow = currentRow + (selectedZone - 1) / 2 * 5;
+                selectedSpace = new Vector2(selectedColumn, selectedRow);
+                BuildTower(selectedSpace, tower);
+                ResetSelector();
+            }
+            // Immediately updates the selector
+            timer = 0.0f;
+        }
+
         //Only interact with the selector when the timer goes off
         timer -= Time.deltaTime;
         if (timer <= 0.0f)
@@ -100,35 +131,7 @@ public class MapControl : MonoBehaviour
                                                            squareSize * -currentColumn + baseOffsetZ);
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            // Runs if no zone has been selected
-            if (selectedZone == 0)
-            {
-                selectedZone = currentColumn + currentRow * 2 + 1;
-                baseOffsetX = baseOffset - currentRow * squareSize;
-                baseOffsetZ = baseOffset - currentColumn * squareSize;
-                currentRow = 0;
-                currentColumn = -1;
-                selector.transform.localScale = new Vector3(1, 1, 1);
-            }
-            // If no column has been selected yet, select a column
-            else if (selectedColumn < 0)
-            {
-                selectedColumn = currentColumn + (selectedZone - 1) % 2 * 5;
-                currentRow -= 1;
-            }
-            // If no row has been selected yet, select a row
-            else if (selectedRow < 0)
-            {
-                selectedRow = currentRow + (selectedZone - 1) / 2 * 5;
-                selectedSpace = new Vector2(selectedColumn, selectedRow);
-                BuildTower(selectedSpace, tower);
-                ResetSelector();
-            }
-            // Immediately updates the selector
-            timer = 0.0f;
-        }
+        
 
     }
 
