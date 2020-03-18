@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletAI : MonoBehaviour
 {
-    public bool locked;
+    public bool homing;
     public bool splash;
     public int bulletDamage = 1;
     public float bulletSpeed = 10.0f;
@@ -30,15 +30,17 @@ public class BulletAI : MonoBehaviour
         }
         else
         {
-            // Moves towards a GameObject's position
-            if (locked)
+            // Sets the target location to that of the target GameObject if it exists
+            if (homing && targetObject)
             {
-                transform.position = Vector3.MoveTowards(transform.position, targetObject.transform.position, bulletSpeed * Time.deltaTime);
+                targetLocation = targetObject.transform.position;
             }
-            // Moves towards a specified destination
-            else
+            // Moves towards a the target location
+            transform.position = Vector3.MoveTowards(transform.position, targetLocation, bulletSpeed * Time.deltaTime);
+
+            if(transform.position == targetLocation)
             {
-                transform.position = Vector3.MoveTowards(transform.position, targetLocation, bulletSpeed * Time.deltaTime);
+                Destroy(gameObject);
             }
 
             // Checks for collisions
