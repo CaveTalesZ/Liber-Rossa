@@ -23,8 +23,20 @@ public class MapControl : MonoBehaviour
     public int baseOffsetX = 70;
     public int baseOffsetZ = 70;
 
-    //Placeholder
+    //Placeholder to spawn in a tower
     public GameObject tower;
+
+    // Determines time between spawning enemies
+    public float spawnDelay = 5.0f;
+    private float spawnTimer;
+    // True after setup
+    public bool waveActive = false;
+    //Stores the enemy to spawn
+    public GameObject enemy;
+    // The amount of enemies to spawn
+    public int enemyCap;
+    // Enemies spawned in this wave
+    private int enemyCount = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -50,87 +62,120 @@ public class MapControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Create player inputs
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            // Runs if no zone has been selected
-            if (selectedZone == 0)
-            {
-                selectedZone = currentColumn + currentRow * 2 + 1;
-                baseOffsetX = baseOffset - currentRow * squareSize;
-                baseOffsetZ = baseOffset - currentColumn * squareSize;
-                currentRow = 0;
-                currentColumn = -1;
-                selector.transform.localScale = new Vector3(1, 1, 1);
-            }
-            // If no column has been selected yet, select a column
-            else if (selectedColumn < 0)
-            {
-                selectedColumn = currentColumn + (selectedZone - 1) % 2 * 5;
-                currentRow -= 1;
-            }
-            // If no row has been selected yet, select a row
-            else if (selectedRow < 0)
-            {
-                selectedRow = currentRow + (selectedZone - 1) / 2 * 5;
-                selectedSpace = new Vector2(selectedColumn, selectedRow);
-                BuildTower(selectedSpace, tower);
-                ResetSelector();
-            }
-            // Immediately updates the selector
-            timer = 0.0f;
+            Application.Quit();
         }
 
-        //Only interact with the selector when the timer goes off
-        timer -= Time.deltaTime;
-        if (timer <= 0.0f)
+        // Setup phase
+        if (!waveActive)
         {
-
-            timer = selectionTime;
-            // Make a counter increase the selector's column 
-            if (selectedColumn < 0)
+            // Create player inputs
+            if (Input.GetKeyDown(KeyCode.R))
             {
-                currentColumn += 1;
+                // Runs if no zone has been selected
+                if (selectedZone == 0)
+                {
+                    selectedZone = currentColumn + currentRow * 2 + 1;
+                    baseOffsetX = baseOffset - currentRow * squareSize;
+                    baseOffsetZ = baseOffset - currentColumn * squareSize;
+                    currentRow = 0;
+                    currentColumn = -1;
+                    selector.transform.localScale = new Vector3(1, 1, 1);
+                }
+                // If no column has been selected yet, select a column
+                else if (selectedColumn < 0)
+                {
+                    selectedColumn = currentColumn + (selectedZone - 1) % 2 * 5;
+                    currentRow -= 1;
+                }
+                // If no row has been selected yet, select a row
+                else if (selectedRow < 0)
+                {
+                    selectedRow = currentRow + (selectedZone - 1) / 2 * 5;
+                    selectedSpace = new Vector2(selectedColumn, selectedRow);
+                    BuildTower(selectedSpace, tower);
+                    ResetSelector();
+                }
+                // Immediately updates the selector
+                timer = 0.0f;
             }
-            else if (selectedRow < 0)
+
+            //Only interact with the selector when the timer goes off
+            timer -= Time.deltaTime;
+            if (timer <= 0.0f)
             {
-                currentRow += 1;
-            }
 
-
-            if (selectedZone == 0)
-            {
-                // Change effective area to move grid selector for large area
-                gridSize = 2;
-                squareSize = 50;
-
-                // Cycle through columns, then rows
-                if (currentRow > gridSize - 1)
+                timer = selectionTime;
+                // Make a counter increase the selector's column 
+                if (selectedColumn < 0)
                 {
                     currentColumn += 1;
                 }
-                if (currentColumn > gridSize - 1)
+                else if (selectedRow < 0)
                 {
                     currentRow += 1;
                 }
+
+
+                if (selectedZone == 0)
+                {
+                    // Change effective area to move grid selector for large area
+                    gridSize = 2;
+                    squareSize = 50;
+
+                    // Cycle through columns, then rows
+                    if (currentRow > gridSize - 1)
+                    {
+                        currentColumn += 1;
+                    }
+                    if (currentColumn > gridSize - 1)
+                    {
+                        currentRow += 1;
+                    }
+                }
+                else
+                {
+                    // Change effective area to move grid selector for smaller area
+                    gridSize = 5;
+                    squareSize = 10;
+                }
+
+
+                currentColumn %= gridSize;
+                currentRow %= gridSize;
+
+                //Move the selector based on current row and column position
+                selector.transform.localPosition = new Vector3(squareSize * -currentRow + baseOffsetX,
+                                                               selector.transform.localPosition.y,
+                                                               squareSize * -currentColumn + baseOffsetZ);
             }
-            else
+
+            if (Input.GetKeyDown(KeyCode.L) && selectedZone == 0)
             {
-                // Change effective area to move grid selector for smaller area
-                gridSize = 5;
-                squareSize = 10;
+                Debug.Log("Started the wave");
+                Destroy(selector);
+                waveActive = true;
+                spawnTimer = spawnDelay;
             }
-
-
-            currentColumn %= gridSize;
-            currentRow %= gridSize;
-
-            //Move the selector based on current row and column position
-            selector.transform.localPosition = new Vector3(squareSize * -currentRow + baseOffsetX,
-                                                           selector.transform.localPosition.y,
-                                                           squareSize * -currentColumn + baseOffsetZ);
         }
-
+        // Wave phase
+        else
+        {
+            Debug.Log("Spawning enemies...");
+            // Spawns in enemies on a timer
+            spawnTimer += Time.deltaTime;
+            if(spawnTimer > spawnDelay && enemyCount < enemyCap )
+            {
+                CreateEnemy(enemy);
+                enemyCount += 1;
+                spawnTimer = 0.0f;
+            }
+            else if (enemyCount >= enemyCap)
+            {
+                waveActive = false;
+            }
+        }
         
 
     }
@@ -172,7 +217,7 @@ public class MapControl : MonoBehaviour
                         {
                             var newTower = Instantiate(tower);
                             newTower.transform.parent = column;
-                            newTower.transform.localPosition = new Vector3(0, 0, 0);
+                            newTower.transform.localPosition = new Vector3(0, 4.5f, 0);
                             Debug.Log("Built " + newTower.name + " at Row" + position.y + ", Column" + position.x + "!");
                             return newTower;
                         }
@@ -181,5 +226,11 @@ public class MapControl : MonoBehaviour
             }
         }
         return null;
+    }
+
+    GameObject CreateEnemy(GameObject enemy)
+    {
+        GameObject result = Instantiate(enemy);
+        return result;
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class TowerAI : MonoBehaviour
 {
 
-    // 
+    // Assigns a bullet to be shot by this turret, which determines how its attacks function
     public GameObject bullet;
 
     // GameObject to detect enemies within the space of a cylindrical collider;
@@ -20,22 +20,34 @@ public class TowerAI : MonoBehaviour
     // List of enemies the turret can hit right now
     private List<GameObject> enemiesInRange;
 
+    // This determines how long it takes before the turret can fire again
+    public float cooldown = 60.0f;
+
+    // This is used
+    public float cooldownTimer = 0.0f;
+
     // Start is called before the first frame update
     void Start()
     {
         rangeCollider = findCollider();
-        rangeCollider.transform.localScale = new Vector3(towerRadius * 2, towerRadius * 2, towerRadius * 2);
+        rangeCollider.transform.localScale = new Vector3(towerRadius * 0.4f, towerRadius * 0.4f, towerRadius * 0.4f);
         effectiveArea = rangeCollider.GetComponent<CapsuleCollider>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (cooldownTimer > 0)
+        {
+            cooldownTimer -= Time.deltaTime;
+        }
         enemiesInRange = findEnemies();
-        if(enemiesInRange.Count > 0)
+        if (enemiesInRange.Count > 0 && cooldownTimer <= 0)
         {
             fireAt(enemiesInRange[0]);
+            cooldownTimer = cooldown;
         }
+        
     }
 
     // Function to shoot aimed attack at a target
@@ -57,8 +69,8 @@ public class TowerAI : MonoBehaviour
     {
         List<GameObject> enemies = new List<GameObject>();
         Collider[] collisions = Physics.OverlapCapsule(effectiveArea.center + new Vector3(0, effectiveArea.height / 2, 0) + rangeCollider.transform.position,
-                                            effectiveArea.center - new Vector3(0, effectiveArea.height / 2, 0) + rangeCollider.transform.position,
-                                            towerRadius);
+                                                       effectiveArea.center - new Vector3(0, effectiveArea.height / 2, 0) + rangeCollider.transform.position,
+                                                       towerRadius);
         foreach(Collider collision in collisions)
         {
             if(collision.gameObject.CompareTag("Enemy"))
