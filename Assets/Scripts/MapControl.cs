@@ -17,11 +17,14 @@ public class MapControl : MonoBehaviour
     //currentRow and currentColumn are relative to the effective area for the selector
     private int currentRow = 0;
     private int currentColumn = 0;
+    // Determines how many squares wide and high the grid area is
     private int gridSize;
+    // Determines how big a square/the selector is to determine how far it should move
     private int squareSize;
-    public int baseOffset = 90;
-    public int baseOffsetX = 70;
-    public int baseOffsetZ = 70;
+    // Determines the starting position of the selector
+    public float baseOffset = 2.5f;
+    public float baseOffsetX = 2.5f;
+    public float baseOffsetY = 2.5f;
 
     //Placeholder to spawn in a tower
     public GameObject tower;
@@ -48,7 +51,7 @@ public class MapControl : MonoBehaviour
         //Set selector size based on whether one of the four zones has been selected
         if (selectedZone == 0)
         {
-            selector.transform.localScale = new Vector3(5, 1, 5);
+            selector.transform.localScale = new Vector3(5, 5, 1);
         }
         else
         {
@@ -77,8 +80,8 @@ public class MapControl : MonoBehaviour
                 if (selectedZone == 0)
                 {
                     selectedZone = currentColumn + currentRow * 2 + 1;
-                    baseOffsetX = baseOffset - currentRow * squareSize;
-                    baseOffsetZ = baseOffset - currentColumn * squareSize;
+                    baseOffsetX =  4.5f - currentColumn * squareSize;
+                    baseOffsetY =  4.5f  - currentRow * squareSize;
                     currentRow = 0;
                     currentColumn = -1;
                     selector.transform.localScale = new Vector3(1, 1, 1);
@@ -107,7 +110,7 @@ public class MapControl : MonoBehaviour
             {
 
                 timer = selectionTime;
-                // Make a counter increase the selector's column 
+                // Make a counter increase the selector's column, if column has been selected, increase row
                 if (selectedColumn < 0)
                 {
                     currentColumn += 1;
@@ -122,7 +125,7 @@ public class MapControl : MonoBehaviour
                 {
                     // Change effective area to move grid selector for large area
                     gridSize = 2;
-                    squareSize = 50;
+                    squareSize = 5;
 
                     // Cycle through columns, then rows
                     if (currentRow > gridSize - 1)
@@ -138,7 +141,7 @@ public class MapControl : MonoBehaviour
                 {
                     // Change effective area to move grid selector for smaller area
                     gridSize = 5;
-                    squareSize = 10;
+                    squareSize = 1;
                 }
 
 
@@ -146,9 +149,9 @@ public class MapControl : MonoBehaviour
                 currentRow %= gridSize;
 
                 //Move the selector based on current row and column position
-                selector.transform.localPosition = new Vector3(squareSize * -currentRow + baseOffsetX,
-                                                               selector.transform.localPosition.y,
-                                                               squareSize * -currentColumn + baseOffsetZ);
+                selector.transform.localPosition = new Vector3(squareSize * currentColumn - baseOffsetX,
+                                                               squareSize * -currentRow + baseOffsetY,
+                                                               selector.transform.localPosition.z);
             }
 
             if (Input.GetKeyDown(KeyCode.L) && selectedZone == 0)
@@ -189,8 +192,8 @@ public class MapControl : MonoBehaviour
         selectedZone = 0;
         currentRow = 0;
         currentColumn = 0;
-        baseOffsetX = baseOffsetZ = baseOffset - 20;
-        selector.transform.localScale = new Vector3(5, 5, 5);
+        baseOffsetX = baseOffsetY = baseOffset;
+        selector.transform.localScale = new Vector3(5, 5, 1);
     }
 
     // Builds a tower at the selected space on the grid
@@ -217,7 +220,7 @@ public class MapControl : MonoBehaviour
                         {
                             var newTower = Instantiate(tower);
                             newTower.transform.parent = column;
-                            newTower.transform.localPosition = new Vector3(0, 4.5f, 0);
+                            newTower.transform.localPosition = new Vector3(0, 0, -1);
                             Debug.Log("Built " + newTower.name + " at Row" + position.y + ", Column" + position.x + "!");
                             return newTower;
                         }

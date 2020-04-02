@@ -49,7 +49,7 @@ public class EnemyAI : MonoBehaviour
         if (waypointIndex <= walkpoints.Count - 1)
         {
             // Move enemy from current waypoint to the next one using MoveTowards method
-            transform.position = Vector3.MoveTowards(transform.position, walkpoints[waypointIndex].position, moveSpeed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, walkpoints[waypointIndex].position, moveSpeed * Time.deltaTime);
 
             // if enemy reachers position of waypoint it walked towards
             // then waypointIndex is increased by 1
