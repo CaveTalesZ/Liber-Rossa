@@ -8,17 +8,16 @@ public class TowerAI : MonoBehaviour
     // Assigns a bullet to be shot by this turret, which determines how its attacks function
     public GameObject bullet;
 
-    // GameObject to detect enemies within the space of a cylindrical collider;
-    private GameObject rangeCollider;
+    // GameObject to show range the tower can reach
+    public GameObject range;
 
     // variable to determine size of rangeCollider
     public float towerRadius = 5.0f;
 
-    // The collider of the rangeCollider GameObject
-    private CapsuleCollider effectiveArea;
-
     // List of enemies the turret can hit right now
     private List<GameObject> enemiesInRange;
+
+    public GameObject closestEnemy;
 
     // This determines how long it takes before the turret can fire again
     public float cooldown = 60.0f;
@@ -29,9 +28,7 @@ public class TowerAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rangeCollider = findCollider();
-        rangeCollider.transform.localScale = new Vector3(towerRadius * 0.4f, towerRadius * 0.4f, towerRadius * 0.4f);
-        effectiveArea = rangeCollider.GetComponent<CapsuleCollider>();
+        range.transform.localScale = new Vector2(towerRadius * 2f, towerRadius * 2f);
     }
 
     // Update is called once per frame
@@ -41,58 +38,71 @@ public class TowerAI : MonoBehaviour
         {
             cooldownTimer -= Time.deltaTime;
         }
-        enemiesInRange = findEnemies();
+        enemiesInRange = findEnemies(towerRadius);
         if (enemiesInRange.Count > 0 && cooldownTimer <= 0)
         {
             fireAt(enemiesInRange[0]);
             cooldownTimer = cooldown;
         }
-        
     }
 
-    // Function to shoot aimed attack at a target
-    public void fireAt(Vector3 target)
-    {
-
-    }
-
-    // Function to shoot locked attack at a target
+    // Function to shoot at a target GameObject
     public void fireAt(GameObject target)
     {
         GameObject attack = Instantiate(bullet);
         bullet.transform.position = transform.position;
         BulletAI bulletScript = attack.GetComponent<BulletAI>();
+        bulletScript.targetLocation = target.transform.position;
         bulletScript.targetObject = target;
     }
 
-    List<GameObject> findEnemies()
+    // Returns a list of all enemies within radius, sorted by proximity, closest first
+    List<GameObject> findEnemies(float radius)
     {
         List<GameObject> enemies = new List<GameObject>();
-        Collider[] collisions = Physics.OverlapCapsule(effectiveArea.center + new Vector3(0, effectiveArea.height / 2, 0) + rangeCollider.transform.position,
-                                                       effectiveArea.center - new Vector3(0, effectiveArea.height / 2, 0) + rangeCollider.transform.position,
-                                                       towerRadius);
-        foreach(Collider collision in collisions)
+        foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
-            if(collision.gameObject.CompareTag("Enemy"))
+            float distance = Vector2.Distance(enemy.transform.position, gameObject.transform.position);
+            // Checks if the distance to the enemy is within the specified radius
+            if (distance <= radius)
             {
-                enemies.Add(collision.gameObject);
+                // If there are no known enemies within range, add this one as the closest
+                if (enemies.Count == 0)
+                {
+                    enemies.Add(enemy);
+                }
+                else
+                {
+                    // Loops through the list of known enemies within range
+                    int i = 0;
+                    while (i < enemies.Count)
+                    {
+                        // If this enemy is closer than another enemy in the radius, put it earlier in the list
+                        if (distance < Vector2.Distance(enemies[i].transform.position, gameObject.transform.position))
+                        {
+                            enemies.Insert(i, enemy);
+                            break;
+                        }
+                        else
+                        {
+                            i++;
+                            // If this enemy was not closer than any other enemy, add it as the furthest
+                            if(i == enemies.Count)
+                            {
+                                enemies.Add(enemy);
+                                break;
+                            }
+                        }
+                    }
+                }
+
             }
+
+            
         }
         return enemies;
 
     }
 
-    GameObject findCollider()
-    {
-        for(var i = 0; i < gameObject.transform.childCount; i++)
-        {
-            GameObject child = gameObject.transform.GetChild(i).gameObject;
-            if (child.name == "Collider")
-            {
-                return child;
-            }
-        }
-        Debug.LogError("Found no GameObject named \"Collider\"");
-        return null;
-    }
+    
 }

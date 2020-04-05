@@ -18,7 +18,7 @@ public class BulletAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -38,25 +38,24 @@ public class BulletAI : MonoBehaviour
             // Moves towards a the target location
             transform.position = Vector3.MoveTowards(transform.position, targetLocation, bulletSpeed * Time.deltaTime);
 
-            if(transform.position == targetLocation)
+            if (transform.position == targetLocation)
             {
                 Destroy(gameObject);
             }
 
-            // Checks for collisions
-            Collider[] collisions = Physics.OverlapBox(transform.position, transform.localScale / 2);
-            // Checks if the collision is an enemy
-            foreach(Collider collision in collisions)
-            {
-                if (collision.gameObject.CompareTag("Enemy"))
-                {
-                    Debug.Log("Pew!");
-                    collision.gameObject.GetComponent<EnemyAI>().hitPoints -= bulletDamage;
-                    Destroy(gameObject);
-                }
-            }
+
         }
 
-        
+
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+
+            other.gameObject.GetComponent<EnemyAI>().hitPoints -= bulletDamage;
+            Destroy(gameObject);
+        }
     }
 }
