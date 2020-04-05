@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MapControl : MonoBehaviour
 {
@@ -41,6 +42,11 @@ public class MapControl : MonoBehaviour
     // Enemies spawned in this wave
     private int enemyCount = 0;
 
+    // Tower building menu
+    public GameObject buildWindow;
+    // Is the building menu open or not?
+    private bool buildMenuOpen = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -76,8 +82,16 @@ public class MapControl : MonoBehaviour
             // Create player inputs
             if (Input.GetKeyDown(KeyCode.R))
             {
+                // Runs if the tower building menu is already open
+                if (buildMenuOpen == true)
+                {
+                    BuildTower(selectedSpace, tower);
+                    ResetSelector();
+                    buildWindow.SetActive (false);
+                    buildMenuOpen = false;
+                }
                 // Runs if no zone has been selected
-                if (selectedZone == 0)
+                else if (selectedZone == 0)
                 {
                     selectedZone = currentColumn + currentRow * 2 + 1;
                     baseOffsetX =  4.5f - currentColumn * squareSize;
@@ -97,8 +111,12 @@ public class MapControl : MonoBehaviour
                 {
                     selectedRow = currentRow + (selectedZone - 1) / 2 * 5;
                     selectedSpace = new Vector2(selectedColumn, selectedRow);
-                    BuildTower(selectedSpace, tower);
-                    ResetSelector();
+                    // Opens the tower building menu
+                    if (buildMenuOpen == false)
+                    {
+                    buildWindow.SetActive (true);
+                    buildMenuOpen = true;
+                    }
                 }
                 // Immediately updates the selector
                 timer = 0.0f;
