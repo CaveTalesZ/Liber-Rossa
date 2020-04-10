@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPoints: 1
-  walkpointContainer: {fileID: 6788679582142933917, guid: 0244af35c56ebc34784fcfa828c4ec2e,
+  walkpointContainer: {fileID: 8536446997833168069, guid: 21a8a33bbfe574c4d94075afbab1d8aa,
     type: 3}
   moveSpeed: 5
 --- !u!61 &-1542816155234845710

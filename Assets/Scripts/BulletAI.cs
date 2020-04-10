@@ -36,9 +36,9 @@ public class BulletAI : MonoBehaviour
                 targetLocation = targetObject.transform.position;
             }
             // Moves towards a the target location
-            transform.position = Vector3.MoveTowards(transform.position, targetLocation, bulletSpeed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, targetLocation, bulletSpeed * Time.deltaTime);
 
-            if (transform.position == targetLocation)
+            if ((Vector2) transform.position == (Vector2) targetLocation)
             {
                 Destroy(gameObject);
             }

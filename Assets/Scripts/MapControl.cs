@@ -80,18 +80,18 @@ public class MapControl : MonoBehaviour
         if (!waveActive)
         {
             // Create player inputs
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown("right"))
             {
                 // Runs if the tower building menu is already open
-                if (buildMenuOpen == true)
-                {
-                    BuildTower(selectedSpace, tower);
-                    ResetSelector();
-                    buildWindow.SetActive (false);
-                    buildMenuOpen = false;
-                }
+                //if (buildMenuOpen == true)
+                //{
+                //    BuildTower(selectedSpace, tower);
+                //    ResetSelector();
+                //    buildWindow.SetActive (false);
+                //    buildMenuOpen = false;
+                //}
                 // Runs if no zone has been selected
-                else if (selectedZone == 0)
+                if (selectedZone == 0)
                 {
                     selectedZone = currentColumn + currentRow * 2 + 1;
                     baseOffsetX =  4.5f - currentColumn * squareSize;
@@ -111,12 +111,15 @@ public class MapControl : MonoBehaviour
                 {
                     selectedRow = currentRow + (selectedZone - 1) / 2 * 5;
                     selectedSpace = new Vector2(selectedColumn, selectedRow);
+
                     // Opens the tower building menu
-                    if (buildMenuOpen == false)
-                    {
-                    buildWindow.SetActive (true);
-                    buildMenuOpen = true;
-                    }
+                    BuildTower(selectedSpace, tower);
+                    ResetSelector();
+                    //if (buildMenuOpen == false)
+                    //{
+                    //buildWindow.SetActive (true);
+                    //buildMenuOpen = true;
+                    //}
                 }
                 // Immediately updates the selector
                 timer = 0.0f;
@@ -172,7 +175,7 @@ public class MapControl : MonoBehaviour
                                                                selector.transform.localPosition.z);
             }
 
-            if (Input.GetKeyDown(KeyCode.L) && selectedZone == 0)
+            if (Input.GetKeyDown("left") && selectedZone == 0)
             {
                 Debug.Log("Started the wave");
                 Destroy(selector);

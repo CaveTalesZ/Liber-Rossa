@@ -50,11 +50,10 @@ public class EnemyAI : MonoBehaviour
         {
             // Move enemy from current waypoint to the next one using MoveTowards method
             transform.position = Vector2.MoveTowards(transform.position, walkpoints[waypointIndex].position, moveSpeed * Time.deltaTime);
-
             // if enemy reachers position of waypoint it walked towards
             // then waypointIndex is increased by 1
             // and enemy starts walking to the next waypoint
-            if (transform.position == walkpoints[waypointIndex].position)
+            if ((Vector2) transform.position == (Vector2) walkpoints[waypointIndex].position)
             {
                 waypointIndex += 1;
             }

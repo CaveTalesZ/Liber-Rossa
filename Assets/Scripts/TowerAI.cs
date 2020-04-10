@@ -50,7 +50,7 @@ public class TowerAI : MonoBehaviour
     public void fireAt(GameObject target)
     {
         GameObject attack = Instantiate(bullet);
-        bullet.transform.position = transform.position;
+        bullet.transform.position = gameObject.transform.position;
         BulletAI bulletScript = attack.GetComponent<BulletAI>();
         bulletScript.targetLocation = target.transform.position;
         bulletScript.targetObject = target;
@@ -64,7 +64,7 @@ public class TowerAI : MonoBehaviour
         {
             float distance = Vector2.Distance(enemy.transform.position, gameObject.transform.position);
             // Checks if the distance to the enemy is within the specified radius
-            if (distance <= radius)
+            if (distance <= radius * gameObject.transform.lossyScale.x)
             {
                 // If there are no known enemies within range, add this one as the closest
                 if (enemies.Count == 0)
