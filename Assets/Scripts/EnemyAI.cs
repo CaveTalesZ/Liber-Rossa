@@ -18,11 +18,15 @@ public class EnemyAI : MonoBehaviour
 
     // Index of current waypoint from which Enemy walks to the next one
     private int waypointIndex = 0;
+    //i need a way to refrence the mapcontrol script here
+    public GameObject grid;
+    float scrapextra;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        grid = GameObject.Find("GridContainer");
         // Set up path to move along
         for (int i = 0; i < walkpointContainer.childCount; i++)
         {
@@ -35,9 +39,12 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        scrapextra = grid.GetComponent<MapControl>().scrap;
         if(hitPoints <= 0)
         {
             Destroy(gameObject);
+            scrapextra = scrapextra + 5;
+            grid.GetComponent<MapControl>().scrap = scrapextra;
         }
         Move();
     }

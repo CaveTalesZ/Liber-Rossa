@@ -26,6 +26,8 @@ public class MapControl : MonoBehaviour
     public float baseOffset = 2.5f;
     public float baseOffsetX = 2.5f;
     public float baseOffsetY = 2.5f;
+    // scrap variable
+    public float scrap = 25f;
 
     //Placeholder to spawn in a tower
     public GameObject tower;
@@ -46,6 +48,8 @@ public class MapControl : MonoBehaviour
     public GameObject buildWindow;
     // Is the building menu open or not?
     private bool buildMenuOpen = false;
+    //scrap variable
+    
 
     // Start is called before the first frame update
     void Start()
@@ -239,11 +243,19 @@ public class MapControl : MonoBehaviour
                         // Construct the actual tower
                         else
                         {
-                            var newTower = Instantiate(tower);
-                            newTower.transform.parent = column;
-                            newTower.transform.localPosition = new Vector3(0, 0, -1);
-                            Debug.Log("Built " + newTower.name + " at Row" + position.y + ", Column" + position.x + "!");
-                            return newTower;
+                            if (scrap >= 5)
+                            {
+                                scrap = scrap - 5;
+                                var newTower = Instantiate(tower);
+                                newTower.transform.parent = column;
+                                newTower.transform.localPosition = new Vector3(0, 0, -1);
+                                Debug.Log("Built " + newTower.name + " at Row" + position.y + ", Column" + position.x + "!");
+                                return newTower;
+                            }
+                            if(scrap == 0)
+                            {
+                                Debug.LogError("You're out of scrap!");
+                            }
                         }
                     }
                 }
