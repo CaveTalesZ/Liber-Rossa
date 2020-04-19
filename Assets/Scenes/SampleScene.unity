@@ -5647,10 +5647,10 @@ MonoBehaviour:
   baseOffsetX: 2.5
   baseOffsetY: 2.5
   tower: {fileID: 9037156787449053567, guid: 87ec934967260c84f902bceb449479fc, type: 3}
-  spawnDelay: 5
+  spawnDelay: 1
   waveActive: 0
   enemy: {fileID: 4845456130713881715, guid: 065178cc65fe3cb4dad531c6bfe579f3, type: 3}
-  enemyCap: 5
+  enemyCap: 10
   buildWindow: {fileID: 1439385229}
 --- !u!1 &1306644199
 GameObject:
