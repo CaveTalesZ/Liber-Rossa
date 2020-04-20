@@ -146,4 +146,4 @@ MonoBehaviour:
   hitPoints: 1
   walkpointContainer: {fileID: 8536446997833168069, guid: 21a8a33bbfe574c4d94075afbab1d8aa,
     type: 3}
-  moveSpeed: 20
+  moveSpeed: 50

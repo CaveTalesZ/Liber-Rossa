@@ -45,7 +45,12 @@ public class BulletAI : MonoBehaviour
 
 
         }
-
+        // Rotate the bullet towards the target
+        //gameObject.transform.eulerAngles = new Vector3(
+        //    transform.rotation.x, 
+        //    transform.rotation.y,
+        //    Vector2.SignedAngle(0, targetLocation - transform.position)
+        //);
 
     }
 

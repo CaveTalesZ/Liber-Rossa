@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class MapControl : MonoBehaviour
 {
     public GameObject selector;
+    // Stores the initial position of the selector
+    private Vector3 selectorStartPosition;
     private int selectedZone = 0;
     public float selectionTime = 6.0f;
     private float timer = 0.0f;
@@ -94,21 +96,22 @@ public class MapControl : MonoBehaviour
                 //    buildWindow.SetActive (false);
                 //    buildMenuOpen = false;
                 //}
-                // Runs if no zone has been selected
+                // Runs if no zone has been selected, selects the current zone
                 if (selectedZone == 0)
                 {
                     selectedZone = currentColumn + currentRow * 2 + 1;
                     baseOffsetX =  4.5f - currentColumn * squareSize;
                     baseOffsetY =  4.5f  - currentRow * squareSize;
-                    currentRow = 0;
+                    currentRow = 2;
                     currentColumn = -1;
-                    selector.transform.localScale = new Vector3(1, 1, 1);
+                    selector.transform.localScale = new Vector3(1, 5, 1);
                 }
                 // If no column has been selected yet, select a column
                 else if (selectedColumn < 0)
                 {
                     selectedColumn = currentColumn + (selectedZone - 1) % 2 * 5;
-                    currentRow -= 1;
+                    currentRow = -1;
+                    selector.transform.localScale = new Vector3(1, 1, 1);
                 }
                 // If no row has been selected yet, select a row
                 else if (selectedRow < 0)
@@ -179,12 +182,34 @@ public class MapControl : MonoBehaviour
                                                                selector.transform.localPosition.z);
             }
 
-            if (Input.GetKeyDown("left") && selectedZone == 0)
+            if (Input.GetKeyDown("left"))
             {
-                Debug.Log("Started the wave");
-                Destroy(selector);
-                waveActive = true;
-                spawnTimer = spawnDelay;
+                if (selectedZone == 0)
+                {
+                    Debug.Log("Started the wave");
+                    Destroy(selector);
+                    waveActive = true;
+                    spawnTimer = spawnDelay;
+                }
+                else
+                {
+                    // Sets the selector back to the previous state depending on current state; Column if selecting rows, zone if selecting columns
+                    if(selectedColumn >= 0)
+                    {
+                        selectedColumn = -1;
+                        selector.transform.localScale = new Vector3(1, 5, 1);
+                        currentRow = 2;
+                        selector.transform.localPosition = new Vector3(squareSize * currentColumn - baseOffsetX,
+                                                               squareSize * -currentRow + baseOffsetY,
+                                                               selector.transform.localPosition.z);
+                        timer = selectionTime;
+                    }
+                    else
+                    {
+                        selectedZone = 0;
+                        ResetSelector();
+                    }
+                }
             }
         }
         // Wave phase
@@ -219,6 +244,10 @@ public class MapControl : MonoBehaviour
         currentColumn = 0;
         baseOffsetX = baseOffsetY = baseOffset;
         selector.transform.localScale = new Vector3(5, 5, 1);
+        selector.transform.localPosition = new Vector3(squareSize * currentColumn - baseOffsetX,
+                                                        squareSize * -currentRow + baseOffsetY,
+                                                        selector.transform.localPosition.z);
+        timer = selectionTime;
     }
 
     // Builds a tower at the selected space on the grid
