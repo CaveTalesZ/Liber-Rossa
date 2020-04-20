@@ -40,7 +40,7 @@ public class BulletAI : MonoBehaviour
             // Moves towards a the target location
             transform.position = Vector2.MoveTowards(transform.position, targetLocation, bulletSpeed * Time.deltaTime);
             //rotates towards target
-            Vector2 direction = targettorotate.position - transform.position;
+            Vector2 direction = targetLocation - transform.position;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotspeed * Time.deltaTime);

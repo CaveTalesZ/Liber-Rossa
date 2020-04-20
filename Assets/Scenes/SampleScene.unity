@@ -5740,7 +5740,7 @@ MonoBehaviour:
   baseOffsetY: 2.5
   scrap: 25
   tower: {fileID: 9037156787449053567, guid: 87ec934967260c84f902bceb449479fc, type: 3}
-  spawnDelay: 5
+  spawnDelay: 1
   waveActive: 0
   enemy: {fileID: 4845456130713881715, guid: 065178cc65fe3cb4dad531c6bfe579f3, type: 3}
   enemyCap: 10
