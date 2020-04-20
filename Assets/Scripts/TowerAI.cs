@@ -54,6 +54,7 @@ public class TowerAI : MonoBehaviour
         BulletAI bulletScript = attack.GetComponent<BulletAI>();
         bulletScript.targetLocation = target.transform.position;
         bulletScript.targetObject = target;
+        bulletScript.targettorotate = target.transform;
     }
 
     // Returns a list of all enemies within radius, sorted by proximity, closest first

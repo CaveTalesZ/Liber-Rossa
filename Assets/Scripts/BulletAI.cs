@@ -7,10 +7,12 @@ public class BulletAI : MonoBehaviour
     public bool homing;
     public bool splash;
     public int bulletDamage = 1;
-    public float bulletSpeed = 10.0f;
+    public float bulletSpeed = 20.0f;
+    public float rotspeed = 100f;
 
     // Position used for aimed attacks
     public Vector3 targetLocation;
+    public Transform targettorotate;
 
     // Position used for locked attacks
     public GameObject targetObject;
@@ -37,6 +39,12 @@ public class BulletAI : MonoBehaviour
             }
             // Moves towards a the target location
             transform.position = Vector2.MoveTowards(transform.position, targetLocation, bulletSpeed * Time.deltaTime);
+            //rotates towards target
+            Vector2 direction = targettorotate.position - transform.position;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotspeed * Time.deltaTime);
+
 
             if ((Vector2) transform.position == (Vector2) targetLocation)
             {
