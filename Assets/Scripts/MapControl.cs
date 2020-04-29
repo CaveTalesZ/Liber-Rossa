@@ -10,7 +10,7 @@ public class MapControl : MonoBehaviour
     private Vector3 selectorStartPosition;
     private int selectedZone = 0;
     public float selectionTime = 6.0f;
-    private float timer = 0.0f;
+    public float timer = 0.0f;
     public Vector2 selectedSpace = new Vector2(-1, -1);
 
     //selectedRow and selectedColumn are absolute to the map
@@ -49,13 +49,20 @@ public class MapControl : MonoBehaviour
     // Tower building menu
     public GameObject buildWindow;
     // Is the building menu open or not?
-    private bool buildMenuOpen = false;
-    //scrap variable
+    private bool showBuildMenu = false;
+
+    // The camera for the scene, where it starts, and how far and quickly to move it
+    public GameObject camera;
+    private Vector3 initialCameraPosition;
+    public int cameraPanDistance;
+    public int cameraSpeed;
     
 
     // Start is called before the first frame update
     void Start()
     {
+        initialCameraPosition = camera.transform.position;
+        
         if (selector == null)
         {
             Debug.LogError("No selector assigned!");
@@ -85,132 +92,155 @@ public class MapControl : MonoBehaviour
         // Setup phase
         if (!waveActive)
         {
-            // Create player inputs
-            if (Input.GetKeyDown("right"))
+            // Use these inputs if the player is not in the buildMenu
+            if(!showBuildMenu)
             {
-                // Runs if the tower building menu is already open
-                //if (buildMenuOpen == true)
-                //{
-                //    BuildTower(selectedSpace, tower);
-                //    ResetSelector();
-                //    buildWindow.SetActive (false);
-                //    buildMenuOpen = false;
-                //}
-                // Runs if no zone has been selected, selects the current zone
-                if (selectedZone == 0)
+                if (Input.GetKeyDown("right"))
                 {
-                    selectedZone = currentColumn + currentRow * 2 + 1;
-                    baseOffsetX =  4.5f - currentColumn * squareSize;
-                    baseOffsetY =  4.5f  - currentRow * squareSize;
-                    currentRow = 2;
-                    currentColumn = -1;
-                    selector.transform.localScale = new Vector3(1, 5, 1);
-                }
-                // If no column has been selected yet, select a column
-                else if (selectedColumn < 0)
-                {
-                    selectedColumn = currentColumn + (selectedZone - 1) % 2 * 5;
-                    currentRow = -1;
-                    selector.transform.localScale = new Vector3(1, 1, 1);
-                }
-                // If no row has been selected yet, select a row
-                else if (selectedRow < 0)
-                {
-                    selectedRow = currentRow + (selectedZone - 1) / 2 * 5;
-                    selectedSpace = new Vector2(selectedColumn, selectedRow);
-
-                    // Opens the tower building menu
-                    BuildTower(selectedSpace, tower);
-                    ResetSelector();
-                    //if (buildMenuOpen == false)
+                    // Runs if the tower building menu is already open
+                    //if (showBuildMenu == true)
                     //{
-                    //buildWindow.SetActive (true);
-                    //buildMenuOpen = true;
+                    //    BuildTower(selectedSpace, tower);
+                    //    ResetSelector();
+                    //    buildWindow.SetActive (false);
+                    //    showBuildMenu = false;
                     //}
+                    // Runs if no zone has been selected, selects the current zone
+                    if (selectedZone == 0)
+                    {
+                        selectedZone = currentColumn + currentRow * 2 + 1;
+                        baseOffsetX = 4.5f - currentColumn * squareSize;
+                        baseOffsetY = 4.5f - currentRow * squareSize;
+                        currentRow = 2;
+                        currentColumn = -1;
+                        selector.transform.localScale = new Vector3(1, 5, 1);
+                    }
+                    // If no column has been selected yet, select a column
+                    else if (selectedColumn < 0)
+                    {
+                        selectedColumn = currentColumn + (selectedZone - 1) % 2 * 5;
+                        currentRow = -1;
+                        selector.transform.localScale = new Vector3(1, 1, 1);
+                    }
+                    // If no row has been selected yet, select a row
+                    else if (selectedRow < 0)
+                    {
+                        selectedRow = currentRow + (selectedZone - 1) / 2 * 5;
+                        selectedSpace = new Vector2(selectedColumn, selectedRow);
+
+                        // Opens the tower building menu
+                        //BuildTower(selectedSpace, tower);
+                        //ResetSelector();
+                        //if (showBuildMenu == false)
+                        //{
+                        //buildWindow.SetActive (true);
+                        //showBuildMenu = true;
+                        //}
+                        showBuildMenu = true;
+                    }
+                    // Immediately updates the selector
+                    timer = 0.0f;
                 }
-                // Immediately updates the selector
-                timer = 0.0f;
-            }
 
-            //Only interact with the selector when the timer goes off
-            timer -= Time.deltaTime;
-            if (timer <= 0.0f)
-            {
-
-                timer = selectionTime;
-                // Make a counter increase the selector's column, if column has been selected, increase row
-                if (selectedColumn < 0)
+                //Only interact with the selector when the timer goes off
+                timer -= Time.deltaTime;
+                if (timer <= 0.0f)
                 {
-                    currentColumn += 1;
-                }
-                else if (selectedRow < 0)
-                {
-                    currentRow += 1;
-                }
 
-
-                if (selectedZone == 0)
-                {
-                    // Change effective area to move grid selector for large area
-                    gridSize = 2;
-                    squareSize = 5;
-
-                    // Cycle through columns, then rows
-                    if (currentRow > gridSize - 1)
+                    timer = selectionTime;
+                    // Make a counter increase the selector's column, if column has been selected, increase row
+                    if (selectedColumn < 0)
                     {
                         currentColumn += 1;
                     }
-                    if (currentColumn > gridSize - 1)
+                    else if (selectedRow < 0)
                     {
                         currentRow += 1;
                     }
-                }
-                else
-                {
-                    // Change effective area to move grid selector for smaller area
-                    gridSize = 5;
-                    squareSize = 1;
-                }
 
 
-                currentColumn %= gridSize;
-                currentRow %= gridSize;
-
-                //Move the selector based on current row and column position
-                selector.transform.localPosition = new Vector3(squareSize * currentColumn - baseOffsetX,
-                                                               squareSize * -currentRow + baseOffsetY,
-                                                               selector.transform.localPosition.z);
-            }
-
-            if (Input.GetKeyDown("left"))
-            {
-                if (selectedZone == 0)
-                {
-                    Debug.Log("Started the wave");
-                    Destroy(selector);
-                    waveActive = true;
-                    spawnTimer = spawnDelay;
-                }
-                else
-                {
-                    // Sets the selector back to the previous state depending on current state; Column if selecting rows, zone if selecting columns
-                    if(selectedColumn >= 0)
+                    if (selectedZone == 0)
                     {
-                        selectedColumn = -1;
-                        selector.transform.localScale = new Vector3(1, 5, 1);
-                        currentRow = 2;
-                        selector.transform.localPosition = new Vector3(squareSize * currentColumn - baseOffsetX,
-                                                               squareSize * -currentRow + baseOffsetY,
-                                                               selector.transform.localPosition.z);
-                        timer = selectionTime;
+                        // Change effective area to move grid selector for large area
+                        gridSize = 2;
+                        squareSize = 5;
+
+                        // Cycle through columns, then rows
+                        if (currentRow > gridSize - 1)
+                        {
+                            currentColumn += 1;
+                        }
+                        if (currentColumn > gridSize - 1)
+                        {
+                            currentRow += 1;
+                        }
                     }
                     else
                     {
-                        selectedZone = 0;
-                        ResetSelector();
+                        // Change effective area to move grid selector for smaller area
+                        gridSize = 5;
+                        squareSize = 1;
+                    }
+
+
+                    currentColumn %= gridSize;
+                    currentRow %= gridSize;
+
+                    //Move the selector based on current row and column position
+                    selector.transform.localPosition = new Vector3(squareSize * currentColumn - baseOffsetX,
+                                                                   squareSize * -currentRow + baseOffsetY,
+                                                                   selector.transform.localPosition.z);
+                }
+
+                if (Input.GetKeyDown("left"))
+                {
+                    if (selectedZone == 0)
+                    {
+                        Debug.Log("Started the wave");
+                        Destroy(selector);
+                        waveActive = true;
+                        spawnTimer = spawnDelay;
+                    }
+                    else
+                    {
+                        // Sets the selector back to the previous state depending on current state; Column if selecting rows, zone if selecting columns
+                        if (selectedColumn >= 0)
+                        {
+                            selectedColumn = -1;
+                            selector.transform.localScale = new Vector3(1, 5, 1);
+                            currentRow = 2;
+                            selector.transform.localPosition = new Vector3(squareSize * currentColumn - baseOffsetX,
+                                                                   squareSize * -currentRow + baseOffsetY,
+                                                                   selector.transform.localPosition.z);
+                            timer = selectionTime;
+                        }
+                        else
+                        {
+                            selectedZone = 0;
+                            ResetSelector();
+                        }
                     }
                 }
             }
+
+            // ### This section contains all code relating to the buildmenu ###
+            if (showBuildMenu && camera.transform.position.x != initialCameraPosition.x + cameraPanDistance && camera.transform.position.x != initialCameraPosition.x - cameraPanDistance)
+            {
+                BuildMenuOpen();
+            }
+            else if(showBuildMenu)
+            {
+                Debug.Log("DoBuildStuff");
+                if (Input.GetKeyDown("left"))
+                {
+                    showBuildMenu = false;
+                }
+            }
+            else if(camera.transform.position.x != initialCameraPosition.x)
+            {
+                BuildMenuClose();
+            }
+
         }
         // Wave phase
         else
@@ -297,5 +327,28 @@ public class MapControl : MonoBehaviour
     {
         GameObject result = Instantiate(enemy);
         return result;
+    }
+
+    void BuildMenuOpen()
+    {
+        Debug.Log("Moving left");
+        camera.transform.position = Vector3.MoveTowards(
+            camera.transform.position, 
+            new Vector3(
+                initialCameraPosition.x - cameraPanDistance, 
+                initialCameraPosition.y,
+                initialCameraPosition.z), 
+            cameraSpeed * Time.deltaTime);
+    }
+
+    void BuildMenuClose()
+    {
+        camera.transform.position = Vector3.MoveTowards(
+            camera.transform.position,
+            new Vector3(
+                initialCameraPosition.x,
+                initialCameraPosition.y,
+                initialCameraPosition.z),
+            cameraSpeed * Time.deltaTime);
     }
 }
