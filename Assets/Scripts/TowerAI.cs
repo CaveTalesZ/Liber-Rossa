@@ -49,8 +49,7 @@ public class TowerAI : MonoBehaviour
     // Function to shoot at a target GameObject
     public void fireAt(GameObject target)
     {
-        GameObject attack = Instantiate(bullet);
-        bullet.transform.position = gameObject.transform.position;
+        GameObject attack = Instantiate(bullet, transform.position, transform.rotation);
         BulletAI bulletScript = attack.GetComponent<BulletAI>();
         bulletScript.targetLocation = target.transform.position;
         bulletScript.targetObject = target;
