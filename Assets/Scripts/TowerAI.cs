@@ -25,6 +25,9 @@ public class TowerAI : MonoBehaviour
     // This is used
     public float cooldownTimer = 0.0f;
 
+  
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +58,9 @@ public class TowerAI : MonoBehaviour
         bulletScript.targetLocation = target.transform.position;
         bulletScript.targetObject = target;
         bulletScript.targettorotate = target.transform;
+        bulletScript.startline = gameObject;
+        bulletScript.endline = target;
+
     }
 
     // Returns a list of all enemies within radius, sorted by proximity, closest first

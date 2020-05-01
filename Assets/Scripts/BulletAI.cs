@@ -6,9 +6,21 @@ public class BulletAI : MonoBehaviour
 {
     public bool homing;
     public bool splash;
+    public bool line;
     public int bulletDamage = 1;
     public float bulletSpeed = 20.0f;
     public float rotspeed = 100f;
+    public SpriteRenderer spirt;
+    //line attack stuff
+    public GameObject startline;
+    public GameObject endline;
+    private LineRenderer linerend;
+    private MeshCollider linecol;
+    public float finalcountdown = 60f;
+    public float anywaycountdown = 60f;
+   
+
+
 
     // Position used for aimed attacks
     public Vector3 targetLocation;
@@ -20,7 +32,9 @@ public class BulletAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        spirt = GetComponent<SpriteRenderer>();
+        linerend = GetComponent<LineRenderer>();
+        linecol = GetComponent<MeshCollider>();
     }
 
     // Update is called once per frame
@@ -33,8 +47,34 @@ public class BulletAI : MonoBehaviour
         else
         {
             // Sets the target location to that of the target GameObject if it exists
+            if (line)
+            {
+                finalcountdown = finalcountdown - 1;
+                anywaycountdown = anywaycountdown - 1;
+                bulletSpeed = 0;
+                spirt.enabled = false;
+                RaycastHit2D ray = Physics2D.Raycast(startline.transform.position, transform.right);
+                Debug.DrawLine(transform.position, ray.point);
+                transform.position = ray.point;
+                //Start and end positions for the line renderer
+                linerend.SetPosition(0, startline.transform.position);
+                linerend.SetPosition(1, endline.transform.position);
+                if(finalcountdown == 0)
+                {
+                    Destroy(endline);
+                    Destroy(gameObject);
+                    finalcountdown = 60f;
+                }
+                if(anywaycountdown == 0)
+                {
+                    Destroy(gameObject);
+                }
+            }
             if (homing && targetObject)
             {
+                bulletSpeed = 60.0f;
+                spirt.enabled = true;
+                linerend.enabled = false;
                 targetLocation = targetObject.transform.position;
             }
             // Moves towards a the target location
@@ -71,4 +111,6 @@ public class BulletAI : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+
 }
