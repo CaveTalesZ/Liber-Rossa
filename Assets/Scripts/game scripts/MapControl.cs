@@ -70,9 +70,13 @@ public class MapControl : MonoBehaviour
     public List<GameObject> buildingList;
     public int selectedOption;
 
+    //other UI elements
+    public GameObject backtomenu;
+
     // Start is called before the first frame update
     void Start()
     {
+        backtomenu.SetActive(false);
         initialCameraPosition = camera.transform.position;
         UILeftStart = UILeft.transform.parent.position;
         UIRightStart = UIRight.transform.parent.position;
@@ -210,10 +214,18 @@ public class MapControl : MonoBehaviour
                 {
                     if (selectedZone == 0)
                     {
-                        Debug.Log("Started the wave");
-                        Destroy(selector);
-                        waveActive = true;
-                        spawnTimer = spawnDelay;
+                        //Debug.Log("Started the wave");
+                        //Destroy(selector);
+                        //waveActive = true;
+                        //spawnTimer = spawnDelay;
+                        //instantiating the pause menu thing
+                        backtomenu.SetActive(true);
+                       Destroy(selector);
+                        if(waveActive == true)
+                        {
+                            Debug.Log("something happenin");
+                        }
+
                     }
                     else
                     {
