@@ -88,7 +88,7 @@ public class MapControl : MonoBehaviour
         //Set selector size based on whether one of the four zones has been selected
         if (selectedZone == 0)
         {
-            selector.transform.localScale = new Vector3(5, 5, 1);
+            selector.transform.localScale = new Vector3(5, 5, 5);
         }
         else
         {
@@ -116,13 +116,13 @@ public class MapControl : MonoBehaviour
                 if (Input.GetKeyDown("right"))
                 {
                     // Runs if the tower building menu is already open
-                    //if (showBuildMenu == true)
-                    //{
-                    //    BuildTower(selectedSpace, tower);
-                    //    ResetSelector();
-                    //    buildWindow.SetActive (false);
-                    //    showBuildMenu = false;
-                    //}
+                    if (showBuildMenu == true)
+                    {
+                       BuildTower(selectedSpace, tower);
+                       ResetSelector();
+                       buildWindow.SetActive (false);
+                       showBuildMenu = false;
+                    }
                     // Runs if no zone has been selected, selects the current zone
                     if (selectedZone == 0)
                     {
@@ -146,15 +146,15 @@ public class MapControl : MonoBehaviour
                         selectedRow = currentRow + (selectedZone - 1) / 2 * 5;
                         selectedSpace = new Vector2(selectedColumn, selectedRow);
 
-                        // Opens the tower building menu
-                        //BuildTower(selectedSpace, tower);
-                        //ResetSelector();
+                         
+                        BuildTower(selectedSpace, tower);
+                        ResetSelector();
                         //if (showBuildMenu == false)
                         //{
-                        //buildWindow.SetActive (true);
-                        //showBuildMenu = true;
+                        //buildWindow.SetActive (false);
+                        //showBuildMenu = false;
                         //}
-                        showBuildMenu = true;
+                        //showBuildMenu = false;
                     }
                     // Immediately updates the selector
                     timer = 0.0f;
@@ -221,11 +221,6 @@ public class MapControl : MonoBehaviour
                         //instantiating the pause menu thing
                         backtomenu.SetActive(true);
                        Destroy(selector);
-                        if(waveActive == true)
-                        {
-                            Debug.Log("something happenin");
-                        }
-
                     }
                     else
                     {
