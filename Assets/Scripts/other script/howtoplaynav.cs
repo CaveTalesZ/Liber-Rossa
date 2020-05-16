@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class menunav : MonoBehaviour
+public class howtoplaynav : MonoBehaviour
 {
- 
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -21,11 +20,7 @@ public class menunav : MonoBehaviour
         }
         if (Input.GetKeyDown("left"))
         {
-            doquitgame();
+            SceneManager.LoadScene("Main Menu");
         }
-    }
-    void doquitgame()
-    {
-        Application.Quit();
     }
 }
