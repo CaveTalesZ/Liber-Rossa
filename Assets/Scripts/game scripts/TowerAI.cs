@@ -8,6 +8,15 @@ public class TowerAI : MonoBehaviour
     // Assigns a bullet to be shot by this turret, which determines how its attacks function
     public GameObject bullet;
 
+    //stuf
+    public bool splash;
+    public bool line;
+    public bool homing;
+    //sprites
+    public Sprite spiral;
+    public Sprite fire;
+    public Sprite ice;
+
     // GameObject to show range the tower can reach
     public GameObject range;
 
@@ -25,12 +34,15 @@ public class TowerAI : MonoBehaviour
     // This is used
     public float cooldownTimer = 0.0f;
 
+    private SpriteRenderer rend;
+
   
     
 
     // Start is called before the first frame update
     void Start()
     {
+        rend = gameObject.GetComponent<SpriteRenderer>();
         range.transform.localScale = new Vector2(towerRadius * 2f, towerRadius * 2f);
     }
 
@@ -46,6 +58,18 @@ public class TowerAI : MonoBehaviour
         {
             fireAt(enemiesInRange[0]);
             cooldownTimer = cooldown;
+        }
+        if(splash == true)
+        {
+            rend.sprite = fire;
+        }
+        if(line == true)
+        {
+            rend.sprite = ice;
+        }
+        if(homing == true)
+        {
+            rend.sprite = spiral;
         }
     }
 

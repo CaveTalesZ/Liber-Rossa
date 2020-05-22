@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class MapControl : MonoBehaviour
 {
+    public GameObject buildselector;
+    public bool towerbuild;
     public GameObject selector;
     // Stores the initial position of the selector
     private Vector3 selectorStartPosition;
@@ -35,7 +37,7 @@ public class MapControl : MonoBehaviour
     public GameObject tower;
 
     // Determines time between spawning enemies
-    public float spawnDelay = 5.0f;
+    public float spawnDelay = 1.0f;
     private float spawnTimer;
     // True after setup
     public bool waveActive = false;
@@ -76,6 +78,8 @@ public class MapControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        buildselector.SetActive(false);
+        towerbuild = false;
         backtomenu.SetActive(false);
         initialCameraPosition = camera.transform.position;
         UILeftStart = UILeft.transform.parent.position;
@@ -118,7 +122,7 @@ public class MapControl : MonoBehaviour
                     // Runs if the tower building menu is already open
                     if (showBuildMenu == true)
                     {
-                        Debug.Log("what");
+                       Debug.Log("what");
                        BuildTower(selectedSpace, tower);
                        ResetSelector();
                        buildWindow.SetActive (true);
@@ -147,15 +151,14 @@ public class MapControl : MonoBehaviour
                         selectedRow = currentRow + (selectedZone - 1) / 2 * 5;
                         selectedSpace = new Vector2(selectedColumn, selectedRow);
 
-                         
-                        BuildTower(selectedSpace, tower);
-                        ResetSelector();
-                        if (showBuildMenu == false)
+                        buildselector.SetActive(true);
+                        
+                        if(towerbuild == true)
                         {
-                        buildWindow.SetActive (false);
-                        showBuildMenu = false;
-                        }
-                        showBuildMenu = false;
+                           Debug.Log("do something");
+                           BuildTower(selectedSpace, tower);
+                           ResetSelector();
+						}
                     }
                     // Immediately updates the selector
                     timer = 0.0f;
@@ -299,7 +302,7 @@ public class MapControl : MonoBehaviour
     }
 
     // Resets selector to initial state
-    void ResetSelector()
+    public void ResetSelector()
     {
         selectedSpace = new Vector2(-1, -1);
         selectedRow = -1;
@@ -316,7 +319,7 @@ public class MapControl : MonoBehaviour
     }
 
     // Builds a tower at the selected space on the grid
-    GameObject BuildTower(Vector2 position, GameObject tower)
+     public GameObject BuildTower(Vector2 position, GameObject tower)
     {
         Debug.Log("Trying to build a tower...");
         // Cycles through all roles and finds one to match selected space
