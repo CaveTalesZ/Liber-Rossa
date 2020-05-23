@@ -6,9 +6,11 @@ public class TowerAI : MonoBehaviour
 {
 
     // Assigns a bullet to be shot by this turret, which determines how its attacks function
-    public GameObject bullet;
+    public GameObject bulletsplash;
+    public GameObject bulletline;
+    public GameObject bullethoming;
 
-    //stuf
+    //stuff
     public bool splash;
     public bool line;
     public bool homing;
@@ -42,6 +44,7 @@ public class TowerAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         rend = gameObject.GetComponent<SpriteRenderer>();
         range.transform.localScale = new Vector2(towerRadius * 2f, towerRadius * 2f);
     }
@@ -49,7 +52,13 @@ public class TowerAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (cooldownTimer > 0)
+		if (gameObject.activeInHierarchy == false)
+		{
+            splash = false;
+            line = false;
+            homing = false;
+		}
+		if (cooldownTimer > 0)
         {
             cooldownTimer -= Time.deltaTime;
         }
@@ -76,18 +85,39 @@ public class TowerAI : MonoBehaviour
     // Function to shoot at a target GameObject
     public void fireAt(GameObject target)
     {
-        GameObject attack = Instantiate(bullet, transform.position, transform.rotation);
-        BulletAI bulletScript = attack.GetComponent<BulletAI>();
-        bulletScript.targetLocation = target.transform.position;
-        bulletScript.targetObject = target;
-        bulletScript.targettorotate = target.transform;
-        bulletScript.startline = gameObject;
-        bulletScript.endline = target;
+        if (homing == true)
+        {
+            GameObject attack1 = Instantiate(bullethoming, transform.position, transform.rotation);
+            homingatk bulletScript1 = attack1.GetComponent<homingatk>();
+            bulletScript1.targetLocation = target.transform.position;
+            bulletScript1.targetObject = target;
+            bulletScript1.targettorotate = target.transform;
 
-    }
+		}
+        if(splash == true)
+        {
+			GameObject attack2 = Instantiate(bulletsplash, transform.position, transform.rotation);
+		    splashatk bulletScript2 = attack2.GetComponent<splashatk>();
+			bulletScript2.targetLocation = target.transform.position;
+			bulletScript2.targetObject = target;
+			bulletScript2.targettorotate = target.transform;
 
-    // Returns a list of all enemies within radius, sorted by proximity, closest first
-    List<GameObject> findEnemies(float radius)
+		}
+        if(line == true)
+        {
+			GameObject attack3 = Instantiate(bulletline, transform.position, transform.rotation);
+			lineatk bulletScript3 = attack3.GetComponent<lineatk>();
+			bulletScript3.targetLocation = target.transform.position;
+			bulletScript3.targetObject = target;
+			bulletScript3.targettorotate = target.transform;
+			bulletScript3.startline = gameObject;
+			bulletScript3.endline = target;
+		}
+
+     }
+
+		// Returns a list of all enemies within radius, sorted by proximity, closest first
+		List<GameObject> findEnemies(float radius)
     {
         List<GameObject> enemies = new List<GameObject>();
         foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))

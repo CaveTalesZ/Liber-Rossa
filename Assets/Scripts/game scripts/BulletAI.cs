@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BulletAI : MonoBehaviour
 {
+    public GameObject tower;
     public bool homing;
     public bool splash;
     public bool line;
@@ -40,6 +41,18 @@ public class BulletAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(tower.GetComponent<TowerAI>().splash == true)
+        {
+            splash = true;
+        }
+        if (tower.GetComponent<TowerAI>().line == true)
+        {
+            line = true;
+        }
+        if (tower.GetComponent<TowerAI>().homing == true)
+        {
+            homing = true;
+        }
         if (splash)
         {
             Debug.LogWarning("We don't have splash functionality yet!");

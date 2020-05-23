@@ -176,7 +176,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b6640acd18f85049886d088a9bb19db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 3989258070392812923, guid: b8b671c8ff8d33f44964713b7d9e03de, type: 3}
+  bulletsplash: {fileID: 1090200841347595729, guid: 6eec7b1999f38284a9e8e80b88edcb96,
+    type: 3}
+  bulletline: {fileID: 681237547823424470, guid: ae4b87ec8c5a5d64fa06213da857982f,
+    type: 3}
+  bullethoming: {fileID: 3989258070392812923, guid: b8b671c8ff8d33f44964713b7d9e03de,
+    type: 3}
   splash: 0
   line: 0
   homing: 0
