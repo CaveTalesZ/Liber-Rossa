@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,6 +44,8 @@ public class MapControl : MonoBehaviour
     public bool waveActive = false;
     //Stores the enemy to spawn
     public GameObject enemy;
+    public GameObject enemy2;
+    public float enemyspawned; 
     // The amount of enemies to spawn
     public int enemyCap;
     // Enemies spawned in this wave
@@ -106,6 +109,8 @@ public class MapControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        enemyspawned = UnityEngine.Random.Range(1, 3);
+        Debug.Log(enemyspawned);
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
@@ -288,9 +293,19 @@ public class MapControl : MonoBehaviour
             spawnTimer += Time.deltaTime;
             if (spawnTimer > spawnDelay && enemyCount < enemyCap)
             {
-                CreateEnemy(enemy);
-                enemyCount += 1;
-                spawnTimer = 0.0f;
+                if(enemyspawned == 1)
+                {
+                    CreateEnemy(enemy);
+                    enemyCount += 1;
+                    spawnTimer = 0.0f;
+                }
+                if (enemyspawned == 2)
+                {
+                    CreateEnemy2(enemy2);
+                    enemyCount += 1;
+                    spawnTimer = 0.0f;
+                }
+
             }
             else if (enemyCount >= enemyCap)
             {
@@ -365,6 +380,11 @@ public class MapControl : MonoBehaviour
     {
         GameObject result = Instantiate(enemy);
         return result;
+    }
+    GameObject CreateEnemy2(GameObject enemy2)
+    {
+        GameObject result2 = Instantiate(enemy2);
+        return result2;
     }
 
     GameObject UIElement;

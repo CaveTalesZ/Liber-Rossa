@@ -58,7 +58,6 @@ public class homingatk : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-
             other.gameObject.GetComponent<EnemyAI>().hitPoints -= bulletDamage;
             Destroy(gameObject);
         }
