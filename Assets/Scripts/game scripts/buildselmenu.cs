@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class buildselmenu : MonoBehaviour
 {
+  private const float TIMER_DELAY = 2.0f;
+
   public GameObject itself;
   public GameObject tower;
   public GameObject grid;
@@ -11,93 +13,65 @@ public class buildselmenu : MonoBehaviour
   public GameObject option2;
   public GameObject option3;
   public Vector2 selectedSpace;
-  public int timer1 = 120;
-  public int timer2 = 0;
-  public int timer3 = 0;
+  public float timer = TIMER_DELAY;
+  private int selectedOption = 0;
   
-    // Start is called before the first frame update
-    void Start()
+  void SetActivationOfOptions() {
+    GameObject[] options = new GameObject[] {option1, option2, option3}; 
+    
+    for (int i = 0; i < options.Length; i++)
     {
-        option1.SetActive(true);
-        option2.SetActive(false);
-        option3.SetActive(false);
-       
+      if (i == selectedOption) {
+        options[i].SetActive(true); 
+      }
+      else {
+        options[i].SetActive(false);
+      }
     }
+  }
+
+  // Start is called before the first frame update
+  void Start()
+  {
+      SetActivationOfOptions();
+  }
+
+  void BuildTower(int selectedTower)
+  {
+    //grid.GetComponent<MapControl>().towerbuild = true;
+    tower.GetComponent<TowerAI>().splash = false;    
+    tower.GetComponent<TowerAI>().line = false;
+    tower.GetComponent<TowerAI>().homing = false;
+
+    if (selectedTower == 0)
+      tower.GetComponent<TowerAI>().splash = true;
+    if (selectedTower == 1)
+      tower.GetComponent<TowerAI>().homing = true;
+    if (selectedTower == 2)
+      tower.GetComponent<TowerAI>().line = true;
+
+    selectedSpace = grid.GetComponent<MapControl>().selectedSpace;
+    grid.GetComponent<MapControl>().BuildTower(selectedSpace, tower);
+    grid.GetComponent<MapControl>().ResetSelector();
+  }
 
     // Update is called once per frame
     void Update()
     {
-    if(itself.activeSelf == true)
-     {
-        if(option1.activeSelf == true)
+      if (itself.activeSelf == true)
+      {
+        timer = timer - Time.deltaTime;
+        if (timer <= 0f) {
+          selectedOption = (selectedOption + 1) % 3;
+          SetActivationOfOptions();
+          timer = TIMER_DELAY;
+        }
+        if(Input.GetKeyDown("right"))
         {
-          timer1 = timer1 - 1;
-          if(timer1 == 0)
-          {
-            option2.SetActive(true);
-            option1.SetActive(false);
-            timer2 = 120;
-		  }
-		}
-        if(option2.activeSelf == true)
-        {
-          timer2 = timer2 - 1;
-          if(timer2 == 0)
-          {
-            option3.SetActive(true);
-            option2.SetActive(false);
-            timer3 = 120;
-		  }
-		}
-        if(option3.activeSelf == true)
-        {
-          timer3 = timer3 - 1;
-          if(timer3 == 0)
-          {
-            option1.SetActive(true);
-            option3.SetActive(false);
-            timer1 = 120;
-		  }
-		}
-        if(Input.GetKeyDown("right") && option1.activeSelf == true && option2.activeSelf == false && option3.activeSelf == false)
-        {
-          Debug.Log("happening");
-          grid.GetComponent<MapControl>().towerbuild = true;  
-          selectedSpace = grid.GetComponent<MapControl>().selectedSpace;
-          grid.GetComponent<MapControl>().BuildTower(selectedSpace, tower);
-          grid.GetComponent<MapControl>().ResetSelector();
-          tower.GetComponent<TowerAI>().splash = true;
-          tower.GetComponent<TowerAI>().line = false;
-          tower.GetComponent<TowerAI>().homing = false;
+          BuildTower(selectedOption);
           itself.SetActive(false);
-		}
-        grid.GetComponent<MapControl>().towerbuild = false; 
-        if(Input.GetKeyDown("right") && option1.activeSelf == false && option2.activeSelf == true && option3.activeSelf == false)
-        {
-          Debug.Log("happening");
-          grid.GetComponent<MapControl>().towerbuild = true;  
-          selectedSpace = grid.GetComponent<MapControl>().selectedSpace;
-          grid.GetComponent<MapControl>().BuildTower(selectedSpace, tower);
-          grid.GetComponent<MapControl>().ResetSelector();
-          tower.GetComponent<TowerAI>().splash = false;
-          tower.GetComponent<TowerAI>().line = false;
-          tower.GetComponent<TowerAI>().homing = true;
-          itself.SetActive(false);
-		}
-        grid.GetComponent<MapControl>().towerbuild = false; 
-        if(Input.GetKeyDown("right") && option1.activeSelf == false && option2.activeSelf == false && option3.activeSelf == true)
-        {
-          Debug.Log("happening");
-          grid.GetComponent<MapControl>().towerbuild = true;  
-          selectedSpace = grid.GetComponent<MapControl>().selectedSpace;
-          grid.GetComponent<MapControl>().BuildTower(selectedSpace, tower);
-          grid.GetComponent<MapControl>().ResetSelector();
-          tower.GetComponent<TowerAI>().splash = false;
-          tower.GetComponent<TowerAI>().line = true;
-          tower.GetComponent<TowerAI>().homing = false;
-          itself.SetActive(false);
-		}
-        grid.GetComponent<MapControl>().towerbuild = false; 
+		    }
+        //grid.GetComponent<MapControl>().towerbuild = false; 
      }
   }
 }
