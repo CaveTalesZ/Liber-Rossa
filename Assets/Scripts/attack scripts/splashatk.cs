@@ -17,9 +17,12 @@ public class splashatk : MonoBehaviour
     // Position used for locked attacks
     public GameObject targetObject;
 
+    public float splashRange = 100;
+
     // Start is called before the first frame update
     void Start()
     {
+
         spirt = GetComponent<SpriteRenderer>();
     }
 
@@ -27,10 +30,20 @@ public class splashatk : MonoBehaviour
     void Update()
     {
 
-        if (splash)
+        if (splash && targetObject)
         {
-            Debug.LogWarning("We don't have splash functionality yet!");
+            bulletSpeed = 60.0f;
+            spirt.enabled = true;
+            targetLocation = targetObject.transform.position;
         }
+
+        transform.position = Vector2.MoveTowards(transform.position, targetLocation, bulletSpeed * Time.deltaTime);
+
+        Vector2 direction = targetLocation - transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotspeed * Time.deltaTime);
+
         if ((Vector2)transform.position == (Vector2)targetLocation)
         {
             Destroy(gameObject);
@@ -52,8 +65,21 @@ public class splashatk : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
 
-            other.gameObject.GetComponent<EnemyAI>().hitPoints -= bulletDamage;
-            Destroy(gameObject);
+            Collider2D[] splashCollider = new Collider2D[10];
+            ContactFilter2D splashFilter = new ContactFilter2D();
+            splashFilter.useTriggers = true;
+            int withinSplash = Physics2D.OverlapCircle(gameObject.transform.position, 100f, splashFilter , splashCollider);
+            Debug.Log("num"+withinSplash);
+            if (withinSplash != 0)
+            {
+                Debug.Log("Trying to hit within splash");
+                foreach (Collider2D enemyHit in splashCollider)
+                {
+                        Debug.Log("Final hit try");
+                        enemyHit.gameObject.GetComponent<EnemyAI>().hitPoints -= bulletDamage;
+                        Destroy(gameObject);
+                }
+            }
         }
     }
 
