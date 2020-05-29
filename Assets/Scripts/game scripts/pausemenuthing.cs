@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class pausemenuthing : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class pausemenuthing : MonoBehaviour
         if (Input.GetKeyDown("left"))
         {
             SceneManager.LoadScene("Main Menu");
+            FindObjectOfType<AudioManager>().Stop("BuildMusic");
         }
         if (Input.GetKeyDown("right"))
         {

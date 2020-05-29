@@ -19,6 +19,6 @@ public class DisplayScrap : MonoBehaviour
     void Update()
     {
        scrp = grid.GetComponent<MapControl>().scrap;
-       scrap.text = "Scrap:" + scrp;
+       scrap.text = "SCRAP:" + scrp;
     }
 }
