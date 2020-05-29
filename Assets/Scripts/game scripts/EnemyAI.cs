@@ -45,6 +45,15 @@ public class EnemyAI : MonoBehaviour
             Destroy(gameObject);
             scrapextra = scrapextra + 5;
             grid.GetComponent<MapControl>().scrap = scrapextra;
+            
+            if (moveSpeed == 50)
+            {
+                FindObjectOfType<AudioManager>().Play("GolemHit");
+            }
+            if (moveSpeed == 60)
+            {
+                FindObjectOfType<AudioManager>().Play("IceHit");
+            }
         }
         Move();
     }

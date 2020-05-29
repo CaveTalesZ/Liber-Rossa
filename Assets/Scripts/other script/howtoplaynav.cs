@@ -17,10 +17,14 @@ public class howtoplaynav : MonoBehaviour
         if (Input.GetKeyDown("right"))
         {
             SceneManager.LoadScene("Game");
+            FindObjectOfType<AudioManager>().Play("Select");
+            FindObjectOfType<AudioManager>().Stop("MainTheme");
+            FindObjectOfType<AudioManager>().Play("BuildMusic");
         }
         if (Input.GetKeyDown("left"))
         {
             SceneManager.LoadScene("Main Menu");
+            FindObjectOfType<AudioManager>().Play("Cancel");
         }
     }
 }

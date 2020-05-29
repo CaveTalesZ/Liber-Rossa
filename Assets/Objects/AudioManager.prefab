@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2899886523937283054
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7971242931082092574}
+  - component: {fileID: 442322273579019458}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7971242931082092574
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2899886523937283054}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -84.74779, y: 81.67557, z: -78.2875}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &442322273579019458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2899886523937283054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b89a4b15d2f8ae74d879ae7cf3c68c15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: MainTheme
+    clip: {fileID: 8300000, guid: bda7923e6fa95d245808c254680f9fcd, type: 3}
+    volume: 0.38
+    source: {fileID: 0}
+    loop: 1
+  - name: Scroll
+    clip: {fileID: 8300000, guid: 177be68777584534c9f0c990169cd357, type: 3}
+    volume: 0.502
+    source: {fileID: 0}
+    loop: 0
+  - name: Select
+    clip: {fileID: 8300000, guid: 27c498f057d607446852a1a84b93185d, type: 3}
+    volume: 0.502
+    source: {fileID: 0}
+    loop: 0
+  - name: Cancel
+    clip: {fileID: 8300000, guid: 1504b861255c00c4a89336671bf3764b, type: 3}
+    volume: 0.502
+    source: {fileID: 0}
+    loop: 0
+  - name: BuildMusic
+    clip: {fileID: 8300000, guid: 9b78f8eabb8fd41468b15ae7996ecee2, type: 3}
+    volume: 0.38
+    source: {fileID: 0}
+    loop: 1
+  - name: Fire
+    clip: {fileID: 8300000, guid: 4c70228aa6030be40abed7a1a97ea257, type: 3}
+    volume: 0.661
+    source: {fileID: 0}
+    loop: 0
+  - name: GolemHit
+    clip: {fileID: 8300000, guid: a93137ed981401347b6d6199c740983a, type: 3}
+    volume: 0.502
+    source: {fileID: 0}
+    loop: 0
+  - name: IceHit
+    clip: {fileID: 8300000, guid: 9dc2db8209be5dc43979881d5412ea2e, type: 3}
+    volume: 0.502
+    source: {fileID: 0}
+    loop: 0
+  - name: Construction
+    clip: {fileID: 8300000, guid: d8617bf6d4c563241a0161b3d2a66681, type: 3}
+    volume: 0.502
+    source: {fileID: 0}
+    loop: 0

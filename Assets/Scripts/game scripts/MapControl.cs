@@ -142,6 +142,7 @@ public class MapControl : MonoBehaviour
                         currentRow = 2;
                         currentColumn = -1;
                         selector.transform.localScale = new Vector3(1, 5, 1);
+                        FindObjectOfType<AudioManager>().Play("Select");
                     }
                     // If no column has been selected yet, select a column
                     else if (selectedColumn < 0)
@@ -149,12 +150,14 @@ public class MapControl : MonoBehaviour
                         selectedColumn = currentColumn + (selectedZone - 1) % 2 * 5;
                         currentRow = -1;
                         selector.transform.localScale = new Vector3(1, 1, 1);
+                        FindObjectOfType<AudioManager>().Play("Select");
                     }
                     // If no row has been selected yet, select a row
                     else if (selectedRow < 0)
                     {
                         selectedRow = currentRow + (selectedZone - 1) / 2 * 5;
                         selectedSpace = new Vector2(selectedColumn, selectedRow);
+                        FindObjectOfType<AudioManager>().Play("Select");
 
                         buildselector.SetActive(true);
                         
@@ -217,6 +220,9 @@ public class MapControl : MonoBehaviour
                     selector.transform.localPosition = new Vector3(squareSize * currentColumn - baseOffsetX,
                                                                    squareSize * -currentRow + baseOffsetY,
                                                                    selector.transform.localPosition.z);
+        
+                    FindObjectOfType<AudioManager>().Play("Scroll");
+                    
                 }
 
                 if (Input.GetKeyDown("left"))
@@ -250,6 +256,7 @@ public class MapControl : MonoBehaviour
                             ResetSelector();
                         }
                     }
+                    FindObjectOfType<AudioManager>().Play("Cancel");
                 }
             }
 

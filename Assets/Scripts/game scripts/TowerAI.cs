@@ -47,6 +47,7 @@ public class TowerAI : MonoBehaviour
 
         rend = gameObject.GetComponent<SpriteRenderer>();
         range.transform.localScale = new Vector2(towerRadius * 2f, towerRadius * 2f);
+        FindObjectOfType<AudioManager>().Play("Construction");
     }
 
     // Update is called once per frame
@@ -85,6 +86,7 @@ public class TowerAI : MonoBehaviour
     // Function to shoot at a target GameObject
     public void fireAt(GameObject target)
     {
+        FindObjectOfType<AudioManager>().Play("Fire");
         if (homing == true)
         {
             GameObject attack1 = Instantiate(bullethoming, transform.position, transform.rotation);

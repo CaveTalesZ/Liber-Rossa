@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class menunav : MonoBehaviour
 {
-
+    public GameObject audioManager;
     public GameObject playgamebtn;
     public GameObject howtoplaybtn;
     public GameObject selector;
@@ -25,6 +25,7 @@ public class menunav : MonoBehaviour
     {
         row1.SetActive(true);
         row2.SetActive(false);
+        FindObjectOfType<AudioManager>().Play("MainTheme");
     }
 
     // Update is called once per frame
@@ -45,6 +46,7 @@ public class menunav : MonoBehaviour
                 row1.SetActive(false);
                 row2.SetActive(true);
                 time2 = 90;
+                FindObjectOfType<AudioManager>().Play("Scroll");
             }
         }
         if(row2.activeSelf == true)
@@ -56,6 +58,7 @@ public class menunav : MonoBehaviour
                     row1.SetActive(true);
                     row2.SetActive(false);
                     time1 = 90;
+                    FindObjectOfType<AudioManager>().Play("Scroll");
                 }
             }
         }
@@ -63,10 +66,14 @@ public class menunav : MonoBehaviour
         if((Input.GetKeyDown("right")) && (row1.activeSelf == true))
         {
             SceneManager.LoadScene("Game");
+            FindObjectOfType<AudioManager>().Stop("MainTheme");
+            FindObjectOfType<AudioManager>().Play("Select");
+            FindObjectOfType<AudioManager>().Play("BuildMusic");
         }
         if((Input.GetKeyDown("right")) && (row2.activeSelf == true))
         {
             SceneManager.LoadScene("howtoplay");
+            FindObjectOfType<AudioManager>().Play("Select");
         }
     }
 
