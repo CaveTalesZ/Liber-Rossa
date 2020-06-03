@@ -5,9 +5,10 @@ using UnityEngine;
 public class BulletAI : MonoBehaviour
 {
     public GameObject tower;
-    public bool homing;
-    public bool splash;
-    public bool line;
+    public TowerAIType type;
+    //public bool homing;
+    //public bool splash;
+    //public bool line;
     public int bulletDamage = 1;
     public float bulletSpeed = 20.0f;
     public float rotspeed = 100f;
@@ -41,26 +42,15 @@ public class BulletAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(tower.GetComponent<TowerAI>().splash == true)
-        {
-            splash = true;
-        }
-        if (tower.GetComponent<TowerAI>().line == true)
-        {
-            line = true;
-        }
-        if (tower.GetComponent<TowerAI>().homing == true)
-        {
-            homing = true;
-        }
-        if (splash)
+        type = tower.GetComponent<TowerAI>().type;
+        if (type == TowerAIType.Splash)
         {
             Debug.LogWarning("We don't have splash functionality yet!");
         }
         else
         {
             // Sets the target location to that of the target GameObject if it exists
-            if (line)
+            if (type == TowerAIType.Line)
             {
                 finalcountdown = finalcountdown - 1;
                 anywaycountdown = anywaycountdown - 1;
@@ -83,7 +73,7 @@ public class BulletAI : MonoBehaviour
                     Destroy(gameObject);
                 }
             }
-            if (homing && targetObject)
+            if (type == TowerAIType.Homing && targetObject)
             {
                 bulletSpeed = 60.0f;
                 spirt.enabled = true;

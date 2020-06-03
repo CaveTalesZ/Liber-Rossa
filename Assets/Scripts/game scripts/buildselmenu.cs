@@ -39,16 +39,16 @@ public class buildselmenu : MonoBehaviour
   void BuildTower(int selectedTower)
   {
     //grid.GetComponent<MapControl>().towerbuild = true;
-    tower.GetComponent<TowerAI>().splash = false;    
-    tower.GetComponent<TowerAI>().line = false;
-    tower.GetComponent<TowerAI>().homing = false;
+    //tower.GetComponent<TowerAI>().splash = false;    
+    //tower.GetComponent<TowerAI>().line = false;
+    //tower.GetComponent<TowerAI>().homing = false;
 
     if (selectedTower == 0)
-      tower.GetComponent<TowerAI>().splash = true;
+      tower.GetComponent<TowerAI>().type = TowerAIType.Splash;
     if (selectedTower == 1)
-      tower.GetComponent<TowerAI>().homing = true;
+      tower.GetComponent<TowerAI>().type = TowerAIType.Homing;
     if (selectedTower == 2)
-      tower.GetComponent<TowerAI>().line = true;
+      tower.GetComponent<TowerAI>().type = TowerAIType.Line;
 
     selectedSpace = grid.GetComponent<MapControl>().selectedSpace;
     grid.GetComponent<MapControl>().BuildTower(selectedSpace, tower);

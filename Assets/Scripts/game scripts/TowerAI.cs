@@ -1,6 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+public enum TowerAIType
+{
+    Splash,
+    Line,
+    Homing
+}
 
 public class TowerAI : MonoBehaviour
 {
@@ -11,9 +19,8 @@ public class TowerAI : MonoBehaviour
     public GameObject bullethoming;
 
     //stuff
-    public bool splash;
-    public bool line;
-    public bool homing;
+    public TowerAIType type = TowerAIType.Homing;
+
     //sprites
     public Sprite spiral;
     public Sprite fire;
@@ -53,12 +60,6 @@ public class TowerAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (gameObject.activeInHierarchy == false)
-		{
-            splash = false;
-            line = false;
-            homing = false;
-		}
 		if (cooldownTimer > 0)
         {
             cooldownTimer -= Time.deltaTime;
@@ -66,20 +67,21 @@ public class TowerAI : MonoBehaviour
         enemiesInRange = findEnemies(towerRadius);
         if (enemiesInRange.Count > 0 && cooldownTimer <= 0)
         {
+            Debug.Log("about to shoot");
             fireAt(enemiesInRange[0]);
             cooldownTimer = cooldown;
         }
-        if(splash == true)
+        switch (type)
         {
-            rend.sprite = fire;
-        }
-        if(line == true)
-        {
-            rend.sprite = ice;
-        }
-        if(homing == true)
-        {
-            rend.sprite = spiral;
+            case TowerAIType.Splash:
+                rend.sprite = fire;
+                break;
+            case TowerAIType.Line:
+                rend.sprite = ice;
+                break;
+            case TowerAIType.Homing:
+                rend.sprite = spiral;
+                break;
         }
     }
 
@@ -87,39 +89,36 @@ public class TowerAI : MonoBehaviour
     public void fireAt(GameObject target)
     {
         FindObjectOfType<AudioManager>().Play("Fire");
-        if (homing == true)
+        switch (type)
         {
-            GameObject attack1 = Instantiate(bullethoming, transform.position, transform.rotation);
-            homingatk bulletScript1 = attack1.GetComponent<homingatk>();
-            bulletScript1.targetLocation = target.transform.position;
-            bulletScript1.targetObject = target;
-            bulletScript1.targettorotate = target.transform;
+            case TowerAIType.Homing:
+                GameObject attack1 = Instantiate(bullethoming, transform.position, transform.rotation);
+                homingatk bulletScript1 = attack1.GetComponent<homingatk>();
+                bulletScript1.targetLocation = target.transform.position;
+                bulletScript1.targetObject = target;
+                bulletScript1.targettorotate = target.transform;
+                break;
+            case TowerAIType.Splash:
+                GameObject attack2 = Instantiate(bulletsplash, transform.position, transform.rotation);
+                splashatk bulletScript2 = attack2.GetComponent<splashatk>();
+                bulletScript2.targetLocation = target.transform.position;
+                bulletScript2.targetObject = target;
+                bulletScript2.targettorotate = target.transform;
+                break;
+            case TowerAIType.Line:
+                GameObject attack3 = Instantiate(bulletline, transform.position, transform.rotation);
+                lineatk bulletScript3 = attack3.GetComponent<lineatk>();
+                bulletScript3.targetLocation = target.transform.position;
+                bulletScript3.targetObject = target;
+                bulletScript3.targettorotate = target.transform;
+                bulletScript3.startline = gameObject;
+                bulletScript3.endline = target;
+                break;
+        }
+    }
 
-		}
-        if(splash == true)
-        {
-			GameObject attack2 = Instantiate(bulletsplash, transform.position, transform.rotation);
-		    splashatk bulletScript2 = attack2.GetComponent<splashatk>();
-			bulletScript2.targetLocation = target.transform.position;
-			bulletScript2.targetObject = target;
-			bulletScript2.targettorotate = target.transform;
-
-		}
-        if(line == true)
-        {
-			GameObject attack3 = Instantiate(bulletline, transform.position, transform.rotation);
-			lineatk bulletScript3 = attack3.GetComponent<lineatk>();
-			bulletScript3.targetLocation = target.transform.position;
-			bulletScript3.targetObject = target;
-			bulletScript3.targettorotate = target.transform;
-			bulletScript3.startline = gameObject;
-			bulletScript3.endline = target;
-		}
-
-     }
-
-		// Returns a list of all enemies within radius, sorted by proximity, closest first
-		List<GameObject> findEnemies(float radius)
+	// Returns a list of all enemies within radius, sorted by proximity, closest first
+	List<GameObject> findEnemies(float radius)
     {
         List<GameObject> enemies = new List<GameObject>();
         foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
@@ -128,6 +127,8 @@ public class TowerAI : MonoBehaviour
             // Checks if the distance to the enemy is within the specified radius
             if (distance <= radius * gameObject.transform.lossyScale.x)
             {
+                Debug.Log("enemy in sight: " + gameObject.name);
+
                 // If there are no known enemies within range, add this one as the closest
                 if (enemies.Count == 0)
                 {

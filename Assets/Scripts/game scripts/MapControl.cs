@@ -33,6 +33,7 @@ public class MapControl : MonoBehaviour
     public float baseOffsetY = 2.5f;
     // scrap variable
     public float scrap = 25f;
+    
 
     //Placeholder to spawn in a tower
     public GameObject tower;
@@ -49,7 +50,9 @@ public class MapControl : MonoBehaviour
     // The amount of enemies to spawn
     public int enemyCap;
     // Enemies spawned in this wave
-    private int enemyCount = 0;
+    public int enemyCount = 0;
+    
+
 
     // Tower building menu
     public GameObject buildWindow;
@@ -110,7 +113,6 @@ public class MapControl : MonoBehaviour
     void Update()
     {
         enemyspawned = UnityEngine.Random.Range(1, 3);
-        Debug.Log(enemyspawned);
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
@@ -235,7 +237,7 @@ public class MapControl : MonoBehaviour
                         //instantiating the pause menu thing
                        backtomenu.SetActive(true);
                        Destroy(selector);
-                       waveActive = true;
+                       
                     }
                     else
                     {
@@ -296,6 +298,7 @@ public class MapControl : MonoBehaviour
         else
         {
             Debug.Log("Spawning enemies...");
+            Debug.Log(enemyCount);
             // Spawns in enemies on a timer
             spawnTimer += Time.deltaTime;
             if (spawnTimer > spawnDelay && enemyCount < enemyCap)
@@ -305,6 +308,7 @@ public class MapControl : MonoBehaviour
                     CreateEnemy(enemy);
                     enemyCount += 1;
                     spawnTimer = 0.0f;
+                   
                 }
                 if (enemyspawned == 2)
                 {
@@ -318,6 +322,7 @@ public class MapControl : MonoBehaviour
             {
                 waveActive = false;
             }
+
         }
 
 
