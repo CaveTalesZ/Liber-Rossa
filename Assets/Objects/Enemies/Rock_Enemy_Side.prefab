@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3274852500259006014}
   - component: {fileID: 7273899533130588905}
+  - component: {fileID: 5865094501819055097}
   m_Layer: 0
   m_Name: Rock_Enemy_Side
   m_TagString: Untagged
@@ -70,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c6c3c073a7500904e95eb7226d2c53f4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3274a199872d559459cc741cbe276bab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -81,3 +82,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!111 &5865094501819055097
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1057625558295671184}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: b9805b3f827c6d444bb016d08cf2bece, type: 2}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
