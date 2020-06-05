@@ -6,10 +6,13 @@ using UnityEngine.SceneManagement;
 public class winscreen : MonoBehaviour
 {
     public GameObject audioManager;
+  
     public GameObject row1;
     public GameObject row2;
+    public GameObject grid;
     public int time1 = 90;
     public int time2 = 0;
+    public int wavestate;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +23,14 @@ public class winscreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(gameObject.activeSelf == false)
+        {
+            wavestate = 1;
+        }
+        else
+        {
+            wavestate = 0;
+        }
         if (Input.GetKeyDown("left"))
         {
             SceneManager.LoadScene("Main Menu");
@@ -52,7 +63,7 @@ public class winscreen : MonoBehaviour
         //scene reload and new scene load
         if ((Input.GetKeyDown("right")) && (row1.activeSelf == true))
         {
-            SceneManager.LoadScene("Main Menu");
+            grid.GetComponent<MapControl>().ResetSelector();
         }
         if ((Input.GetKeyDown("right")) && (row2.activeSelf == true))
         {

@@ -33,17 +33,18 @@ public class TowerAI : MonoBehaviour
     public float towerRadius = 5.0f;
 
     // List of enemies the turret can hit right now
-    private List<GameObject> enemiesInRange;
-
-    public GameObject closestEnemy;
+    public List<GameObject> enemiesInRange;
 
     // This determines how long it takes before the turret can fire again
     public float cooldown = 60.0f;
 
     // This is used
+    // it is indeed, whoa
     public float cooldownTimer = 0.0f;
-
+    //sprite renderer for the tower
     private SpriteRenderer rend;
+    //range's circle collider
+    public Collider2D collideboye;
 
   
     
@@ -51,7 +52,7 @@ public class TowerAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        collideboye = GetComponentInChildren<CircleCollider2D>();
         rend = gameObject.GetComponent<SpriteRenderer>();
         range.transform.localScale = new Vector2(towerRadius * 2f, towerRadius * 2f);
         FindObjectOfType<AudioManager>().Play("Construction");
@@ -65,11 +66,11 @@ public class TowerAI : MonoBehaviour
             cooldownTimer -= Time.deltaTime;
         }
         enemiesInRange = findEnemies(towerRadius);
-        if (enemiesInRange.Count > 0 && cooldownTimer <= 0)
+        if (enemiesInRange.Count >= 0 && cooldownTimer <= 0)
         {
-            Debug.Log("about to shoot");
-            fireAt(enemiesInRange[0]);
-            cooldownTimer = cooldown;
+           //Debug.Log("about to shoot");
+           //fireAt(enemiesInRange[0]);
+           cooldownTimer = cooldown;
         }
         switch (type)
         {
@@ -166,6 +167,5 @@ public class TowerAI : MonoBehaviour
         return enemies;
 
     }
-
-    
+   
 }

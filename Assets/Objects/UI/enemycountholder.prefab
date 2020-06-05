@@ -43,6 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48740847a29e7b34787e1a567a3a43aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemies: []
   getcount: []
   timerr: 200
-  winmenu: {fileID: 969219712197716289, guid: e66171ab3b9cac94c81a61f659c61265, type: 3}
+  winmenu: {fileID: 0}
+  losemenu: {fileID: 3663552239783190725, guid: 402ece992a3b7a749b02bcd6b1993953,
+    type: 3}
+  endobject: {fileID: 0}
+  counter: 0

@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class MapControl : MonoBehaviour
 {
     public GameObject buildselector;
+    public GameObject winscreen;
+    public GameObject enemyholder;
     public bool towerbuild;
     public GameObject selector;
     // Stores the initial position of the selector
@@ -46,9 +48,9 @@ public class MapControl : MonoBehaviour
     //Stores the enemy to spawn
     public GameObject enemy;
     public GameObject enemy2;
-    public float enemyspawned; 
+    public float enemyspawned;
     // The amount of enemies to spawn
-    public int enemyCap;
+    public int enemyCap = 2;
     // Enemies spawned in this wave
     public int enemyCount = 0;
     
@@ -84,7 +86,9 @@ public class MapControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        enemyholder.SetActive(false);
         buildselector.SetActive(false);
+        winscreen.SetActive(false);
         towerbuild = false;
         backtomenu.SetActive(false);
         initialCameraPosition = camera.transform.position;
@@ -165,9 +169,9 @@ public class MapControl : MonoBehaviour
                         
                         if(towerbuild == true)
                         {
-                           Debug.Log("do something");
-                           BuildTower(selectedSpace, tower);
-                           ResetSelector();
+                           //Debug.Log("do something");
+                           //BuildTower(selectedSpace, tower);
+                           //ResetSelector();
 						}
                     }
                     // Immediately updates the selector
@@ -236,7 +240,7 @@ public class MapControl : MonoBehaviour
                         //spawnTimer = spawnDelay;
                         //instantiating the pause menu thing
                        backtomenu.SetActive(true);
-                       Destroy(selector);
+                       selector.SetActive(false);
                        
                     }
                     else
@@ -297,8 +301,8 @@ public class MapControl : MonoBehaviour
         // Wave phase
         else
         {
+            enemyholder.SetActive(true);
             Debug.Log("Spawning enemies...");
-            Debug.Log(enemyCount);
             // Spawns in enemies on a timer
             spawnTimer += Time.deltaTime;
             if (spawnTimer > spawnDelay && enemyCount < enemyCap)
@@ -324,13 +328,32 @@ public class MapControl : MonoBehaviour
             }
 
         }
-
+        //new wave
+        if(enemyholder.GetComponent<winlosecond>().waveended == true)
+        {
+            winscreen.SetActive(true);
+        }
+        if (Input.GetKeyDown("right"))
+        {
+            if(winscreen.activeSelf == true && winscreen.GetComponent<winscreen>().row1.activeSelf == true)
+            {
+                enemyholder.GetComponent<winlosecond>().waveended = false;
+                enemyholder.GetComponent<winlosecond>().timerr = 200;
+                selector.SetActive(true);
+                ResetSelector();
+                enemyCount = 0;
+                
+                
+            }
+        }
 
     }
 
     // Resets selector to initial state
     public void ResetSelector()
     {
+        winscreen.SetActive(false);
+        enemyholder.SetActive(false);
         selectedSpace = new Vector2(-1, -1);
         selectedRow = -1;
         selectedColumn = -1;

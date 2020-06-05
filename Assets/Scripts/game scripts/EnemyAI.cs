@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
+    public GameObject losecondition;
     // The amount of damage the unit can take
     public int hitPoints = 1;
 
@@ -74,6 +75,13 @@ public class EnemyAI : MonoBehaviour
                 waypointIndex += 1;
             }
 
+        }
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("lose"))
+        {
+            Destroy(gameObject);
         }
     }
 }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6614401062394598134}
   - component: {fileID: 2916718986319220376}
   - component: {fileID: 8747754732508070013}
+  - component: {fileID: 4936155725232815361}
   m_Layer: 0
   m_Name: range
   m_TagString: Untagged
@@ -98,6 +99,20 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.000000059604645}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &4936155725232815361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5484013728498056700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4c2d9749eb6f14ea6482b8d23090be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tower: {fileID: 9037156787449053567}
+  enemiesInRange: []
 --- !u!1 &9037156787449053567
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,6 +220,7 @@ MonoBehaviour:
   ice: {fileID: 21300000, guid: e791cbc238be3314c96fc4a98af8400a, type: 3}
   range: {fileID: 5484013728498056700}
   towerRadius: 2
+  enemiesInRange: []
   closestEnemy: {fileID: 0}
   cooldown: 1.5
   cooldownTimer: 0

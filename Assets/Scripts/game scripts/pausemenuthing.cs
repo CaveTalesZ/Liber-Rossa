@@ -8,7 +8,6 @@ public class pausemenuthing : MonoBehaviour
 {
     public GameObject gridcontainer;
     public bool activewave;
-    public GameObject enemyholder;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,8 +27,8 @@ public class pausemenuthing : MonoBehaviour
         if (Input.GetKeyDown("right"))
         {
             gridcontainer.GetComponent<MapControl>().waveActive = true;
-            Instantiate(enemyholder);
-            Destroy(gameObject);
+            gridcontainer.GetComponent<MapControl>().enemyCap += 2;
+            gameObject.SetActive(false);
         }
     }
 }
