@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -2525902972490938288}
   - component: {fileID: -7255784055794891592}
   - component: {fileID: 8467360487927862652}
+  - component: {fileID: 4712071688356097770}
   m_Layer: 0
   m_Name: Ice_Enemy_Side
   m_TagString: Enemy
@@ -96,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdb35692d43461d49b7768944752c6cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  losecondition: {fileID: 0}
   hitPoints: 1
   walkpointContainer: {fileID: 8536446997833168069, guid: 21a8a33bbfe574c4d94075afbab1d8aa,
     type: 3}
@@ -653,3 +655,22 @@ PolygonCollider2D:
       - {x: 1.76, y: 0.31}
       - {x: 1.76, y: 0.38}
       - {x: 1.7199999, y: 0.42999998}
+--- !u!95 &4712071688356097770
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7881352738571824126}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f3166c3b139a77b4aa3bb32728827c8b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
