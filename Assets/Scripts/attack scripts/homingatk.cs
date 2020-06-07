@@ -10,6 +10,12 @@ public class homingatk : MonoBehaviour
     public float bulletSpeed = 20.0f;
     public float rotspeed = 100f;
     public SpriteRenderer spirt;
+
+
+    public Material material;
+    Renderer rend;
+
+
     //line attack stuff
 
     // Position used for aimed attacks
@@ -22,6 +28,10 @@ public class homingatk : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        rend = GetComponent<Renderer>();
+        rend.enabled = true;
+
         spirt = GetComponent<SpriteRenderer>();
         
     }
@@ -59,6 +69,8 @@ public class homingatk : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             other.gameObject.GetComponent<EnemyAI>().hitPoints -= bulletDamage;
+            rend.sharedMaterial = material;
+
             Destroy(gameObject);
         }
     }
