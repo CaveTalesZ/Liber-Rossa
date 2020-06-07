@@ -3,7 +3,12 @@ guid: 5994bc05589259b44a913f86b6af81d9
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - tower: {instanceID: 0}
+  - spirt: {instanceID: 0}
+  - material: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - targettorotate: {instanceID: 0}
+  - targetObject: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
