@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5356178632595188068}
   - component: {fileID: -8731894373674248321}
   m_Layer: 0
-  m_Name: Rock_Enemy_Front
+  m_Name: Rock_Enemy_Side
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   losecondition: {fileID: 0}
-  hitPoints: 1
+  hitPoints: 2
   walkpointContainer: {fileID: 8536446997833168069, guid: 21a8a33bbfe574c4d94075afbab1d8aa,
     type: 3}
   moveSpeed: 50

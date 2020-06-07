@@ -17,6 +17,7 @@ public class TowerAI : MonoBehaviour
     public GameObject bulletsplash;
     public GameObject bulletline;
     public GameObject bullethoming;
+    public float scrapcost;
 
     //stuff
     public TowerAIType type = TowerAIType.Homing;
@@ -93,6 +94,7 @@ public class TowerAI : MonoBehaviour
         switch (type)
         {
             case TowerAIType.Homing:
+                
                 GameObject attack1 = Instantiate(bullethoming, transform.position, transform.rotation);
                 homingatk bulletScript1 = attack1.GetComponent<homingatk>();
                 bulletScript1.targetLocation = target.transform.position;
@@ -100,6 +102,7 @@ public class TowerAI : MonoBehaviour
                 bulletScript1.targettorotate = target.transform;
                 break;
             case TowerAIType.Splash:
+                
                 GameObject attack2 = Instantiate(bulletsplash, transform.position, transform.rotation);
                 splashatk bulletScript2 = attack2.GetComponent<splashatk>();
                 bulletScript2.targetLocation = target.transform.position;
@@ -107,6 +110,7 @@ public class TowerAI : MonoBehaviour
                 bulletScript2.targettorotate = target.transform;
                 break;
             case TowerAIType.Line:
+                
                 GameObject attack3 = Instantiate(bulletline, transform.position, transform.rotation);
                 lineatk bulletScript3 = attack3.GetComponent<lineatk>();
                 bulletScript3.targetLocation = target.transform.position;

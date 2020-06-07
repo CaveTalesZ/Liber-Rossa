@@ -214,6 +214,7 @@ MonoBehaviour:
     type: 3}
   bullethoming: {fileID: 3989258070392812923, guid: b8b671c8ff8d33f44964713b7d9e03de,
     type: 3}
+  scrapcost: 0
   type: 0
   spiral: {fileID: 21300000, guid: 4250b06105a4ae743a2bd557e57ae781, type: 3}
   fire: {fileID: 21300000, guid: 3e5bd9e3ab5299d4eb729e7d6751b380, type: 3}

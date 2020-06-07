@@ -34,7 +34,10 @@ public class MapControl : MonoBehaviour
     public float baseOffsetX = 2.5f;
     public float baseOffsetY = 2.5f;
     // scrap variable
-    public float scrap = 25f;
+    public float scrap = 30f;
+    public float scrapcost = 0;
+    //wave count
+    public float wavecount = 0;
     
 
     //Placeholder to spawn in a tower
@@ -48,7 +51,9 @@ public class MapControl : MonoBehaviour
     //Stores the enemy to spawn
     public GameObject enemy;
     public GameObject enemy2;
+    public GameObject enemy3;
     public float enemyspawned;
+    public int enemytypes = 3;
     // The amount of enemies to spawn
     public int enemyCap = 2;
     // Enemies spawned in this wave
@@ -116,7 +121,23 @@ public class MapControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        enemyspawned = UnityEngine.Random.Range(1, 3);
+        //if(tower.GetComponent<TowerAI>().homing == true)
+        //{
+        //    scrapcost = scrapcost + 10;
+        //}
+        //if (tower.GetComponent<TowerAI>().splash == true)
+        //{
+        //    scrapcost = scrapcost + 20;
+        //}
+        //if (tower.GetComponent<TowerAI>().line == true)
+        //{
+        //    scrapcost = scrapcost + 15;
+        //}
+        enemyspawned = UnityEngine.Random.Range(1, enemytypes);
+        if(wavecount == 5)
+        {
+            enemytypes = 4;
+        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
@@ -320,6 +341,12 @@ public class MapControl : MonoBehaviour
                     enemyCount += 1;
                     spawnTimer = 0.0f;
                 }
+                if (enemyspawned == 3)
+                {
+                    CreateEnemy3(enemy3);
+                    enemyCount += 1;
+                    spawnTimer = 0.0f;
+                }
 
             }
             else if (enemyCount >= enemyCap)
@@ -390,18 +417,19 @@ public class MapControl : MonoBehaviour
                         // Construct the actual tower
                         else
                         {
-                            if (scrap >= 5)
+                            if (scrap >= 10)
                             {
-                                scrap = scrap - 5;
+                                scrap = scrap - 10;
+                                
                                 var newTower = Instantiate(tower);
                                 newTower.transform.parent = column;
                                 newTower.transform.localPosition = new Vector3(0, 0, -1);
                                 Debug.Log("Built " + newTower.name + " at Row" + position.y + ", Column" + position.x + "!");
                                 return newTower;
                             }
-                            if (scrap == 0)
+                            if (scrap <= 0)
                             {
-                                Debug.LogError("You're out of scrap!");
+                                Debug.LogError("Not enough scrap!");
                             }
                         }
                     }
@@ -420,6 +448,11 @@ public class MapControl : MonoBehaviour
     {
         GameObject result2 = Instantiate(enemy2);
         return result2;
+    }
+    GameObject CreateEnemy3(GameObject enemy3)
+    {
+        GameObject result3 = Instantiate(enemy3);
+        return result3;
     }
 
     GameObject UIElement;
