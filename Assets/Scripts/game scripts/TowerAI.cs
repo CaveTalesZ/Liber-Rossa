@@ -68,8 +68,8 @@ public class TowerAI : MonoBehaviour
         enemiesInRange = findEnemies(towerRadius);
         if (enemiesInRange.Count >= 0 && cooldownTimer <= 0)
         {
-           //Debug.Log("about to shoot");
-           //fireAt(enemiesInRange[0]);
+           Debug.Log("about to shoot");
+           fireAt(enemiesInRange[0]);
            cooldownTimer = cooldown;
         }
         switch (type)
