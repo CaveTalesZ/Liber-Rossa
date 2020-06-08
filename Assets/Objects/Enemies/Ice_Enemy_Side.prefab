@@ -98,10 +98,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   losecondition: {fileID: 0}
-  hitPoints: 4
+  hitPoints: 3
   walkpointContainer: {fileID: 8536446997833168069, guid: 21a8a33bbfe574c4d94075afbab1d8aa,
     type: 3}
-  moveSpeed: 60
+  moveSpeed: 50
   grid: {fileID: 0}
 --- !u!50 &-7255784055794891592
 Rigidbody2D:

@@ -6,7 +6,7 @@ public class lineatk : MonoBehaviour
 {
     public GameObject tower;
     public bool line = true;
-    public int bulletDamage = 1;
+    public int bulletDamage = 3;
     public float bulletSpeed = 20.0f;
     public float rotspeed = 100f;
     public SpriteRenderer spirt;
@@ -15,7 +15,7 @@ public class lineatk : MonoBehaviour
     public GameObject endline;
     private LineRenderer linerend;
     private MeshCollider linecol;
-    public float finalcountdown = 60f;
+    public float finalcountdown = 30f;
     public float anywaycountdown = 60f;
 
 
@@ -54,14 +54,14 @@ public class lineatk : MonoBehaviour
             linerend.SetPosition(1, endline.transform.position);
             if (finalcountdown == 0)
             {
-                Destroy(endline);
                 Destroy(gameObject);
-                finalcountdown = 60f;
+                endline.gameObject.GetComponent<EnemyAI>().hitPoints -= bulletDamage;
+                finalcountdown = 30f;
             }
-            if (anywaycountdown == 0)
-            {
-                Destroy(gameObject);
-            }
+            //if (anywaycountdown == 0)
+            //{
+            //    Destroy(gameObject);
+            //}
         }
         if ((Vector2)transform.position == (Vector2)targetLocation)
         {

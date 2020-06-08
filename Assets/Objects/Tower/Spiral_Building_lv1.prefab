@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6614401062394598134}
   - component: {fileID: 2916718986319220376}
-  - component: {fileID: 8747754732508070013}
   - component: {fileID: 4936155725232815361}
+  - component: {fileID: 21912724559839379}
   m_Layer: 0
   m_Name: range
   m_TagString: Untagged
@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5484013728498056700}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.19, z: 0.39}
-  m_LocalScale: {x: 2.544306, y: 2.544306, z: 2.544306}
+  m_LocalPosition: {x: 0, y: 0, z: 0.39}
+  m_LocalScale: {x: 1.7321911, y: 1.7321911, z: 1.7321911}
   m_Children: []
   m_Father: {fileID: 3856077505347120779}
   m_RootOrder: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 173efa0653116c44bb1cdd23c963aa16, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 17adbac650fe6a3439561bae64ade21e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -83,7 +83,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!58 &8747754732508070013
+--- !u!114 &4936155725232815361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5484013728498056700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4c2d9749eb6f14ea6482b8d23090be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tower: {fileID: 9037156787449053567}
+  enemiesInRange: []
+--- !u!58 &21912724559839379
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -96,23 +110,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.000000059604645}
+  m_Offset: {x: 0.00000014655312, y: 0.0000002931062}
   serializedVersion: 2
-  m_Radius: 0.5
---- !u!114 &4936155725232815361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5484013728498056700}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a4c2d9749eb6f14ea6482b8d23090be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tower: {fileID: 9037156787449053567}
-  enemiesInRange: []
+  m_Radius: 1.4353051
 --- !u!1 &9037156787449053567
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 9011680902855884531}
   m_Layer: 0
   m_Name: Spiral_Building_lv1
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -215,12 +215,19 @@ MonoBehaviour:
   bullethoming: {fileID: 3989258070392812923, guid: b8b671c8ff8d33f44964713b7d9e03de,
     type: 3}
   scrapcost: 0
+  towerhealth: 10
   type: 0
   spiral: {fileID: 21300000, guid: 4250b06105a4ae743a2bd557e57ae781, type: 3}
+  spiraldmg1: {fileID: 0}
+  spiraldmg2: {fileID: 0}
   fire: {fileID: 21300000, guid: 3e5bd9e3ab5299d4eb729e7d6751b380, type: 3}
+  firedmg1: {fileID: 0}
+  firedmg2: {fileID: 0}
   ice: {fileID: 21300000, guid: e791cbc238be3314c96fc4a98af8400a, type: 3}
+  icedmg1: {fileID: 0}
+  icedmg2: {fileID: 0}
   range: {fileID: 5484013728498056700}
-  towerRadius: 2
+  towerRadius: 1.5
   enemiesInRange: []
   cooldown: 1.5
   cooldownTimer: 0

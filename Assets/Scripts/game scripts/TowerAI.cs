@@ -18,20 +18,27 @@ public class TowerAI : MonoBehaviour
     public GameObject bulletline;
     public GameObject bullethoming;
     public float scrapcost;
+    public int towerhealth = 10;
 
     //stuff
     public TowerAIType type = TowerAIType.Homing;
 
     //sprites
     public Sprite spiral;
+    public Sprite spiraldmg1;
+    public Sprite spiraldmg2;
     public Sprite fire;
+    public Sprite firedmg1;
+    public Sprite firedmg2;
     public Sprite ice;
+    public Sprite icedmg1;
+    public Sprite icedmg2;
 
     // GameObject to show range the tower can reach
     public GameObject range;
 
     // variable to determine size of rangeCollider
-    public float towerRadius = 5.0f;
+    public float towerRadius = 1.0f;
 
     // List of enemies the turret can hit right now
     public List<GameObject> enemiesInRange;
@@ -62,6 +69,10 @@ public class TowerAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(towerhealth <= 0)
+        {
+            Destroy(gameObject);
+        }
 		if (cooldownTimer > 0)
         {
             cooldownTimer -= Time.deltaTime;
@@ -69,7 +80,7 @@ public class TowerAI : MonoBehaviour
         enemiesInRange = findEnemies(towerRadius);
         if (enemiesInRange.Count >= 0 && cooldownTimer <= 0)
         {
-           Debug.Log("about to shoot");
+           //Debug.Log("about to shoot");
            fireAt(enemiesInRange[0]);
            cooldownTimer = cooldown;
         }

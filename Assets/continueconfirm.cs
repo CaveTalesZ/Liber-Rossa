@@ -1,0 +1,37 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class continueconfirm : MonoBehaviour
+{
+    public int wait = 10;
+    public GameObject grid;
+    public GameObject winscreen;
+    public GameObject winlosecond;
+    // Start is called before the first frame update
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown("right"))
+        {
+            grid.GetComponent<MapControl>().enabled = true;
+            grid.GetComponent<MapControl>().ResetSelector();
+            winlosecond.GetComponent<winlosecond>().timerr = 200;
+            grid.GetComponent<MapControl>().enemyCount = 0;
+            
+        }
+        if (Input.GetKeyDown("left"))
+        {
+            wait = wait - 1;
+            winscreen.GetComponent<winscreen>().enabled = true;
+            winscreen.GetComponent<winscreen>().time1 = 90;
+            winscreen.GetComponent<winscreen>().time2 = 0;
+            gameObject.SetActive(false);
+        }
+    }
+}

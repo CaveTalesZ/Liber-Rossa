@@ -9,15 +9,20 @@ public class winscreen : MonoBehaviour
   
     public GameObject row1;
     public GameObject row2;
+    public GameObject continueconfirm;
+    public GameObject restartconfirm;
     public GameObject grid;
-    public int time1 = 90;
-    public int time2 = 0;
+    public GameObject winlosecond;
+    public int time1;
+    public int time2;
     public int wavestate;
     // Start is called before the first frame update
     void Start()
     {
         row1.SetActive(true);
         row2.SetActive(false);
+        continueconfirm.SetActive(false);
+        restartconfirm.SetActive(false);
     }
 
     // Update is called once per frame
@@ -31,7 +36,7 @@ public class winscreen : MonoBehaviour
         {
             wavestate = 0;
         }
-        if (Input.GetKeyDown("left"))
+        if ((Input.GetKeyDown("left")) && (restartconfirm.GetComponent<restartconfirm>().wait == 0) && (continueconfirm.GetComponent<continueconfirm>().wait == 0))
         {
             SceneManager.LoadScene("Main Menu");
         }
@@ -39,7 +44,7 @@ public class winscreen : MonoBehaviour
         if (row1.activeSelf == true)
         {
             time1 = time1 - 1;
-            if (time1 == 0)
+            if (time1 <= 0)
             {
                 row1.SetActive(false);
                 row2.SetActive(true);
@@ -51,7 +56,7 @@ public class winscreen : MonoBehaviour
         {
             time2 = time2 - 1;
             {
-                if (time2 == 0)
+                if (time2 <= 0)
                 {
                     row1.SetActive(true);
                     row2.SetActive(false);
@@ -63,12 +68,20 @@ public class winscreen : MonoBehaviour
         //scene reload and new scene load
         if ((Input.GetKeyDown("right")) && (row1.activeSelf == true))
         {
-            grid.GetComponent<MapControl>().ResetSelector();
+            
+
+            //gameObject.SetActive(false);
+            continueconfirm.SetActive(true);
+            continueconfirm.GetComponent<continueconfirm>().wait = 10;
+            gameObject.GetComponent<winscreen>().enabled = false;
+
         }
         if ((Input.GetKeyDown("right")) && (row2.activeSelf == true))
         {
-            SceneManager.LoadScene("Game");
-    
+            restartconfirm.SetActive(true);
+            restartconfirm.GetComponent<restartconfirm>().wait = 10;
+            gameObject.GetComponent<winscreen>().enabled = false;
+            
         }
     }
 }

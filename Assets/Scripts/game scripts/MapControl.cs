@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class MapControl : MonoBehaviour
 {
+    public GameObject continueconfirm;
+    public GameObject restartconfirm;
     public GameObject buildselector;
     public GameObject winscreen;
     public GameObject enemyholder;
@@ -58,6 +60,7 @@ public class MapControl : MonoBehaviour
     public int enemyCap = 2;
     // Enemies spawned in this wave
     public int enemyCount = 0;
+    public bool spawnedBigGuy = false;
     
 
 
@@ -94,6 +97,8 @@ public class MapControl : MonoBehaviour
         enemyholder.SetActive(false);
         buildselector.SetActive(false);
         winscreen.SetActive(false);
+        continueconfirm.SetActive(false);
+        restartconfirm.SetActive(false);
         towerbuild = false;
         backtomenu.SetActive(false);
         initialCameraPosition = camera.transform.position;
@@ -134,9 +139,13 @@ public class MapControl : MonoBehaviour
         //    scrapcost = scrapcost + 15;
         //}
         enemyspawned = UnityEngine.Random.Range(1, enemytypes);
-        if(wavecount == 5)
+        if(wavecount >= 5 && spawnedBigGuy == false)
         {
             enemytypes = 4;
+        }
+        else
+        {
+            enemytypes = 3;
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -187,8 +196,8 @@ public class MapControl : MonoBehaviour
                         FindObjectOfType<AudioManager>().Play("Select");
 
                         buildselector.SetActive(true);
-                        
-                        if(towerbuild == true)
+                        buildselector.GetComponent<buildselmenu>().selectedOption = 0;
+                        if (towerbuild == true)
                         {
                            //Debug.Log("do something");
                            //BuildTower(selectedSpace, tower);
@@ -346,19 +355,25 @@ public class MapControl : MonoBehaviour
                     CreateEnemy3(enemy3);
                     enemyCount += 1;
                     spawnTimer = 0.0f;
+                    spawnedBigGuy = true;
                 }
 
             }
             else if (enemyCount >= enemyCap)
             {
                 waveActive = false;
+                gameObject.GetComponent<MapControl>().enabled = false;
             }
 
         }
         //new wave
-        if(enemyholder.GetComponent<winlosecond>().waveended == true)
+        if(winscreen.activeSelf == true)
         {
-            winscreen.SetActive(true);
+            //winscreen.SetActive(true);
+            //enemyholder.GetComponent<winlosecond>().waveended = false;
+            //winscreen.GetComponent<winscreen>().time1 = 90;
+            //winscreen.GetComponent<winscreen>().time2 = 0;
+            spawnedBigGuy = false;
         }
         if (Input.GetKeyDown("right"))
         {
@@ -379,7 +394,11 @@ public class MapControl : MonoBehaviour
     // Resets selector to initial state
     public void ResetSelector()
     {
+        selector.SetActive(true);
+        continueconfirm.SetActive(false);
         winscreen.SetActive(false);
+        winscreen.GetComponent<winscreen>().time1 = 90;
+        winscreen.GetComponent<winscreen>().time2 = 0;
         enemyholder.SetActive(false);
         selectedSpace = new Vector2(-1, -1);
         selectedRow = -1;

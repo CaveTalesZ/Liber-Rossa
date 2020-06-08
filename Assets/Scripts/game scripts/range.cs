@@ -16,8 +16,6 @@ public class range : MonoBehaviour
     void Update()
     {
         enemiesInRange = tower.GetComponent<TowerAI>().enemiesInRange;
-        List<GameObject> enemies = new List<GameObject>();
-        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"));
     }
     public void OnTriggerEnter2D(Collider2D other)
     {

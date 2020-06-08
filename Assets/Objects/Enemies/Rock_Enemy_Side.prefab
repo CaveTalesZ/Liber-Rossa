@@ -119,10 +119,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   losecondition: {fileID: 0}
-  hitPoints: 2
+  hitPoints: 5
   walkpointContainer: {fileID: 8536446997833168069, guid: 21a8a33bbfe574c4d94075afbab1d8aa,
     type: 3}
-  moveSpeed: 50
+  moveSpeed: 40
   grid: {fileID: 0}
 --- !u!60 &5356178632595188068
 PolygonCollider2D:

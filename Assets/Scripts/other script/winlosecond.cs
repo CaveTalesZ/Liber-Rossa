@@ -10,6 +10,7 @@ public class winlosecond : MonoBehaviour
     public float timerr = 2.0f;
     public GameObject losemenu;
     public GameObject endobject;
+    public GameObject winmenu;
     public int counter;
     public bool waveended;
 
@@ -29,8 +30,9 @@ public class winlosecond : MonoBehaviour
        if(counter == 0 && timerr <= 0 && endobject.GetComponent<losegame>().health > 0)
         {
             timerr = 0;
-            waveended = true;
-
+            winmenu.SetActive(true);
+            winmenu.GetComponent<winscreen>().enabled = true;
+            
         }
        if(endobject.GetComponent<losegame>().health == 0)
         {

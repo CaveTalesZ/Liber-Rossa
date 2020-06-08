@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class buildselmenu : MonoBehaviour
 {
-  private const float TIMER_DELAY = 2.0f;
+  public const float TIMER_DELAY = 1.0f;
 
   public GameObject itself;
   public GameObject tower;
@@ -14,7 +14,7 @@ public class buildselmenu : MonoBehaviour
   public GameObject option3;
   public Vector2 selectedSpace;
   public float timer = TIMER_DELAY;
-  private int selectedOption = 0;
+  public int selectedOption = 0;
   
   void SetActivationOfOptions() {
     GameObject[] options = new GameObject[] {option1, option2, option3}; 
