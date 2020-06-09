@@ -218,14 +218,14 @@ MonoBehaviour:
   towerhealth: 10
   type: 0
   spiral: {fileID: 21300000, guid: 4250b06105a4ae743a2bd557e57ae781, type: 3}
-  spiraldmg1: {fileID: 0}
-  spiraldmg2: {fileID: 0}
+  spiraldmg1: {fileID: 21300000, guid: 391b2af5ec54a88408d559d837ebf20b, type: 3}
+  spiraldmg2: {fileID: 21300000, guid: 50be406b68e4de446945bd7c3a934ff1, type: 3}
   fire: {fileID: 21300000, guid: 3e5bd9e3ab5299d4eb729e7d6751b380, type: 3}
-  firedmg1: {fileID: 0}
-  firedmg2: {fileID: 0}
+  firedmg1: {fileID: 21300000, guid: a3a17a1eb06a26741956f38153be91de, type: 3}
+  firedmg2: {fileID: 21300000, guid: ffb2564d1bd7bc54093c8a2910d99a05, type: 3}
   ice: {fileID: 21300000, guid: e791cbc238be3314c96fc4a98af8400a, type: 3}
-  icedmg1: {fileID: 0}
-  icedmg2: {fileID: 0}
+  icedmg1: {fileID: 21300000, guid: b27e4767abc63f74e96a38a2687a6230, type: 3}
+  icedmg2: {fileID: 21300000, guid: 21787ddf9b1d2bc48a9674ccd20a3988, type: 3}
   range: {fileID: 5484013728498056700}
   towerRadius: 1.5
   enemiesInRange: []

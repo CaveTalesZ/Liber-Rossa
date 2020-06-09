@@ -88,15 +88,54 @@ public class TowerAI : MonoBehaviour
         {
             case TowerAIType.Splash:
                 rend.sprite = fire;
+                if(towerhealth <= 10 && towerhealth >= 7)
+                {
+                    rend.sprite = fire;
+                }
+                if (towerhealth >= 3 && towerhealth < 7)
+                {
+                    rend.sprite = firedmg1;
+                }
+                if (towerhealth < 3 && towerhealth > 0)
+                {
+                    rend.sprite = firedmg2;
+                }
                 break;
             case TowerAIType.Line:
                 rend.sprite = ice;
+                if (towerhealth <= 10 && towerhealth >= 7)
+                {
+                    rend.sprite = ice;
+                }
+                if (towerhealth >= 3 && towerhealth < 7)
+                {
+                    rend.sprite = icedmg1;
+                }
+                if (towerhealth < 3 && towerhealth > 0)
+                {
+                    rend.sprite = icedmg2;
+                }
                 break;
             case TowerAIType.Homing:
                 rend.sprite = spiral;
+                if (towerhealth <= 10 && towerhealth >= 7)
+                {
+                    rend.sprite = spiral;
+                }
+                if (towerhealth >= 3 && towerhealth < 7)
+                {
+                    rend.sprite = spiraldmg1;
+                }
+                if (towerhealth < 3 && towerhealth > 0)
+                {
+                    rend.sprite = spiraldmg2;
+                }
+
                 break;
         }
+
     }
+   
 
     // Function to shoot at a target GameObject
     public void fireAt(GameObject target)
