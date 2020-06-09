@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -5902476116046453979}
   - component: {fileID: 5356178632595188068}
   - component: {fileID: -8731894373674248321}
+  - component: {fileID: 8816369618814973377}
   m_Layer: 0
   m_Name: Rock_Enemy_Side
   m_TagString: Enemy
@@ -330,7 +331,7 @@ Animator:
   m_GameObject: {fileID: 4845456130713881715}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 79b75a57f3f8c0e45853b14db04685c3, type: 2}
+  m_Controller: {fileID: 9100000, guid: d2c8262900b103f45b84cd95d1b2ce86, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -339,3 +340,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8816369618814973377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4845456130713881715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 689ef109563526b489bf68c936b4e7c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 4845456130713881715}
+  animator: {fileID: -8731894373674248321}
+  movementx: 0
+  movementy: 0

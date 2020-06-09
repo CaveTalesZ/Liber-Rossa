@@ -180,6 +180,7 @@ MonoBehaviour:
   bulletsplash: {fileID: 0}
   bulletline: {fileID: 0}
   bullethoming: {fileID: 0}
+  scrapcost: 0
   type: 2
   spiral: {fileID: 0}
   fire: {fileID: 0}
