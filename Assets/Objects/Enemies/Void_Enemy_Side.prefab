@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   losecondition: {fileID: 0}
-  hitPoints: 50
+  hitPoints: 20
   walkpointContainer: {fileID: 8536446997833168069, guid: 21a8a33bbfe574c4d94075afbab1d8aa,
     type: 3}
   moveSpeed: 30

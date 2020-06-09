@@ -269,7 +269,7 @@ public class MapControl : MonoBehaviour
                         //Destroy(selector);
                         //spawnTimer = spawnDelay;
                         //instantiating the pause menu thing
-                       backtomenu.SetActive(true);
+                       backtomenu.SetActive(true);                   
                        selector.SetActive(false);
                        
                     }

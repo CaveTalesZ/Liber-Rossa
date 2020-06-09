@@ -68,8 +68,6 @@ public class winscreen : MonoBehaviour
         //scene reload and new scene load
         if ((Input.GetKeyDown("right")) && (row1.activeSelf == true))
         {
-            
-
             //gameObject.SetActive(false);
             continueconfirm.SetActive(true);
             continueconfirm.GetComponent<continueconfirm>().wait = 10;
