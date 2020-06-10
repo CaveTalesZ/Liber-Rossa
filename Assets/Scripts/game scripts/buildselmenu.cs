@@ -59,7 +59,7 @@ public class buildselmenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(selectedOption);  
+       Debug.Log(selectedOption);  
       if (itself.activeSelf == true)
       {
         timer = timer - Time.deltaTime;
