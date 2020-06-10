@@ -42,11 +42,25 @@ public class enemyrange : MonoBehaviour
         {
             cooldownTimer -= Time.deltaTime;
         }
-        towersInRange = findtowers(enemyRadius);
-        if (towersInRange.Count >= 0 && cooldownTimer <= 0)
+        Debug.Log("number of towers in range: " + towersInRange.Count);
+
+        if (towersInRange.Count > 0 && cooldownTimer <= 0)
         {
+            // look for the closes tower
+            GameObject closestTower = towersInRange[0];
+            float closestDistance = Vector3.Distance(closestTower.transform.position, gameObject.transform.position);
+            foreach (var tower in towersInRange)
+            {
+                float new_distance = Vector3.Distance(tower.transform.position, gameObject.transform.position);
+                if (new_distance < closestDistance)
+                {
+                    closestDistance = new_distance;
+                    closestTower = tower;
+                }
+            }
+
             //Debug.Log("about to shoot");
-            fireAt(towersInRange[0]);
+            fireAt(closestTower);
             cooldownTimer = cooldown;
         }
     }
@@ -61,54 +75,20 @@ public class enemyrange : MonoBehaviour
         bulletScript1.targettorotate = target.transform;
     }
 
-    // Returns a list of all towers within radius, sorted by proximity, closest first
-    List<GameObject> findtowers(float radius)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        List<GameObject> towers = new List<GameObject>();
-        foreach (GameObject tower in GameObject.FindGameObjectsWithTag("Tower"))
+        if (other.gameObject.CompareTag("Tower"))
         {
-            float distance = Vector2.Distance(tower.transform.position, gameObject.transform.position);
-            // Checks if the distance to the enemy is within the specified radius
-            if (distance <= radius * gameObject.transform.lossyScale.x)
-            {
-                Debug.Log("tower in sight: " + gameObject.name);
-
-                // If there are no known towers within range, add this one as the closest
-                if (towers.Count == 0)
-                {
-                    towers.Add(tower);
-                }
-                else
-                {
-                    // Loops through the list of known towers within range
-                    int i = 0;
-                    while (i < towers.Count)
-                    {
-                        // If this enemy is closer than another enemy in the radius, put it earlier in the list
-                        if (distance < Vector2.Distance(towers[i].transform.position, gameObject.transform.position))
-                        {
-                            towers.Insert(i, tower);
-                            break;
-                        }
-                        else
-                        {
-                            i++;
-                            // If this enemy was not closer than any other enemy, add it as the furthest
-                            if (i == towers.Count)
-                            {
-                                towers.Add(tower);
-                                break;
-                            }
-                        }
-                    }
-                }
-
-            }
-
-
+            towersInRange.Add(other.gameObject);
         }
-        return towers;
+    }
 
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Tower"))
+        {
+            towersInRange.Remove(other.gameObject);
+        }
     }
 
 }

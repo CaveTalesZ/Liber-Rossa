@@ -5,7 +5,7 @@ using UnityEngine;
 public class pathFollower : MonoBehaviour
 {
 
-    Node[] pathNode;
+    /*Node[] pathNode;
     public GameObject Player;
     public float MoveSpeed;
     float Timer;
@@ -46,5 +46,5 @@ public class pathFollower : MonoBehaviour
             CheckNode();
 
         }
-    }
+    }*/
 }
