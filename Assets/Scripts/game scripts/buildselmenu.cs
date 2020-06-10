@@ -49,8 +49,9 @@ public class buildselmenu : MonoBehaviour
       tower.GetComponent<TowerAI>().type = TowerAIType.Homing;
     if (selectedTower == 2)
       tower.GetComponent<TowerAI>().type = TowerAIType.Line;
+        Debug.Log(selectedTower);
 
-    selectedSpace = grid.GetComponent<MapControl>().selectedSpace;
+        selectedSpace = grid.GetComponent<MapControl>().selectedSpace;
     grid.GetComponent<MapControl>().BuildTower(selectedSpace, tower);
     grid.GetComponent<MapControl>().ResetSelector();
   }
@@ -58,6 +59,7 @@ public class buildselmenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(selectedOption);  
       if (itself.activeSelf == true)
       {
         timer = timer - Time.deltaTime;

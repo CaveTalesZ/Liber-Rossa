@@ -126,18 +126,8 @@ public class MapControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if(tower.GetComponent<TowerAI>().homing == true)
-        //{
-        //    scrapcost = scrapcost + 10;
-        //}
-        //if (tower.GetComponent<TowerAI>().splash == true)
-        //{
-        //    scrapcost = scrapcost + 20;
-        //}
-        //if (tower.GetComponent<TowerAI>().line == true)
-        //{
-        //    scrapcost = scrapcost + 15;
-        //}
+
+
         enemyspawned = UnityEngine.Random.Range(1, enemytypes);
         if(wavecount >= 5 && spawnedBigGuy == false)
         {
@@ -196,7 +186,7 @@ public class MapControl : MonoBehaviour
                         FindObjectOfType<AudioManager>().Play("Select");
 
                         buildselector.SetActive(true);
-                        buildselector.GetComponent<buildselmenu>().selectedOption = 0;
+                        //buildselector.GetComponent<buildselmenu>().selectedOption = 0;
                         if (towerbuild == true)
                         {
                            //Debug.Log("do something");
@@ -436,10 +426,23 @@ public class MapControl : MonoBehaviour
                         // Construct the actual tower
                         else
                         {
-                            if (scrap >= 10)
+                            if (scrap >= scrapcost)
                             {
-                                scrap = scrap - 10;
-                                
+                                if (tower.GetComponent<TowerAI>().type == TowerAIType.Homing)
+                                {
+                                    scrapcost = 10;
+                                }
+                                if (tower.GetComponent<TowerAI>().type == TowerAIType.Splash)
+                                {
+                                    scrapcost = 20;
+                                }
+                                if (tower.GetComponent<TowerAI>().type == TowerAIType.Line)
+                                {
+                                    scrapcost = 15;
+                                }
+                                Debug.Log("Scrap cost" + " " + scrapcost);
+                                scrap = scrap - scrapcost;  
+                                //putting the tower down
                                 var newTower = Instantiate(tower);
                                 newTower.transform.parent = column;
                                 newTower.transform.localPosition = new Vector3(0, 0, -1);

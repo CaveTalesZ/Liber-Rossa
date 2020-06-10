@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum TowerAIType
@@ -9,6 +10,7 @@ public enum TowerAIType
     Line,
     Homing
 }
+
 
 public class TowerAI : MonoBehaviour
 {
@@ -41,7 +43,7 @@ public class TowerAI : MonoBehaviour
     public float towerRadius = 1.0f;
 
     // List of enemies the turret can hit right now
-    public List<GameObject> enemiesInRange;
+    public List<GameObject> enemiesInRange = new List<GameObject>();
 
     // This determines how long it takes before the turret can fire again
     public float cooldown = 60.0f;
@@ -73,12 +75,15 @@ public class TowerAI : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
 		if (cooldownTimer > 0)
         {
             cooldownTimer -= Time.deltaTime;
         }
-        enemiesInRange = findEnemies(towerRadius);
-        if (enemiesInRange.Count >= 0 && cooldownTimer <= 0)
+
+        enemiesInRange = enemiesInRange.Where(enemy => enemy != null).ToList();
+
+        if (enemiesInRange.Count > 0 && cooldownTimer <= 0)
         {
            //Debug.Log("about to shoot");
            fireAt(enemiesInRange[0]);
@@ -221,5 +226,21 @@ public class TowerAI : MonoBehaviour
         return enemies;
 
     }
-   
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            enemiesInRange.Add(collision.gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            enemiesInRange.Remove(collision.gameObject);
+        }
+
+    }
 }

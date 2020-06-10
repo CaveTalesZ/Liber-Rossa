@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6614401062394598134}
   - component: {fileID: 2916718986319220376}
-  - component: {fileID: 4936155725232815361}
-  - component: {fileID: 21912724559839379}
   m_Layer: 0
   m_Name: range
   m_TagString: Untagged
@@ -83,36 +81,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!114 &4936155725232815361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5484013728498056700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a4c2d9749eb6f14ea6482b8d23090be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tower: {fileID: 9037156787449053567}
-  enemiesInRange: []
---- !u!58 &21912724559839379
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5484013728498056700}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.00000014655312, y: 0.0000002931062}
-  serializedVersion: 2
-  m_Radius: 1.4353051
 --- !u!1 &9037156787449053567
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,6 +92,7 @@ GameObject:
   - component: {fileID: 3856077505347120779}
   - component: {fileID: 2459865866361433466}
   - component: {fileID: 9011680902855884531}
+  - component: {fileID: 5986632781975489473}
   m_Layer: 0
   m_Name: Spiral_Building_lv1
   m_TagString: Tower
@@ -232,3 +201,19 @@ MonoBehaviour:
   cooldown: 1.5
   cooldownTimer: 0
   collideboye: {fileID: 0}
+--- !u!58 &5986632781975489473
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9037156787449053567}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.00000014655312, y: 0.0000002931062}
+  serializedVersion: 2
+  m_Radius: 1.4353051
