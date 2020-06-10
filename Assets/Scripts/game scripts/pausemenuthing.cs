@@ -67,9 +67,9 @@ public class pausemenuthing : MonoBehaviour
         }
         if (Input.GetKeyDown("right"))
         {
-            gridcontainer.GetComponent<MapControl>().wavecount += 1;
+            //gridcontainer.GetComponent<MapControl>().wavecount += 1;
             gridcontainer.GetComponent<MapControl>().waveActive = true;
-            gridcontainer.GetComponent<MapControl>().enemyCap += 2;
+            //gridcontainer.GetComponent<MapControl>().enemyCap += 2;
             gameObject.SetActive(false);
         }
     }

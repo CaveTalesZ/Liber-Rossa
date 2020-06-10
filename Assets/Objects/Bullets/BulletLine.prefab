@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1478037809413679069}
   m_Layer: 0
   m_Name: BulletLine
-  m_TagString: Untagged
+  m_TagString: linebullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -215,7 +215,7 @@ MonoBehaviour:
   spirt: {fileID: 354846353370696568}
   startline: {fileID: 0}
   endline: {fileID: 0}
-  finalcountdown: 60
+  finalcountdown: 10
   anywaycountdown: 60
   targetLocation: {x: 0, y: 0, z: 0}
   targettorotate: {fileID: 0}

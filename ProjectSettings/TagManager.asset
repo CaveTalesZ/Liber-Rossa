@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - lose
   - Tower
+  - linebullet
+  - bulletline
   layers:
   - Default
   - TransparentFX

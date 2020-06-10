@@ -17,14 +17,15 @@ public class winlosecond : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        endobject = GameObject.Find("End");
+        //endobject = GameObject.Find("End");
         waveended = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-       timerr = timerr - 1;
+        endobject = GameObject.Find("End(Clone)");
+        timerr = timerr - 1;
        getcount = GameObject.FindGameObjectsWithTag("Enemy");
        counter = getcount.Length; 
        if(counter == 0 && timerr <= 0 && endobject.GetComponent<losegame>().health > 0)
@@ -34,10 +35,10 @@ public class winlosecond : MonoBehaviour
             winmenu.GetComponent<winscreen>().enabled = true;
             
         }
-       if(endobject.GetComponent<losegame>().health == 0)
+       if(endobject.GetComponent<losegame>().health <= 0)
         {
             DestroyEnemies();
-            Instantiate(losemenu);
+            losemenu.SetActive(true);
             Destroy(endobject);
         }
     }

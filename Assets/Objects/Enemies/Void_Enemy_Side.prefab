@@ -65,7 +65,7 @@ MonoBehaviour:
   range: {fileID: 4325182069288336121}
   enemyRadius: 1
   towersInRange: []
-  cooldown: 60
+  cooldown: 2
   cooldownTimer: 0
   collideboye: {fileID: 0}
 --- !u!1 &4845456130713881715

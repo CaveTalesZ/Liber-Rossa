@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6614401062394598134}
   - component: {fileID: 2916718986319220376}
+  - component: {fileID: 2044226537812131929}
+  - component: {fileID: 973913628048969899}
   m_Layer: 0
   m_Name: range
   m_TagString: Untagged
@@ -26,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 5484013728498056700}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.39}
-  m_LocalScale: {x: 1.7321911, y: 1.7321911, z: 1.7321911}
+  m_LocalScale: {x: 2.4619632, y: 2.4619632, z: 2.4619632}
   m_Children: []
   m_Father: {fileID: 3856077505347120779}
   m_RootOrder: 0
@@ -81,6 +83,47 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!58 &2044226537812131929
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5484013728498056700}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.49999997
+--- !u!114 &973913628048969899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5484013728498056700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 567f9ec274d05c3469dba093f791a3d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tower: {fileID: 9037156787449053567}
+  bulletsplash: {fileID: 1090200841347595729, guid: 6eec7b1999f38284a9e8e80b88edcb96,
+    type: 3}
+  bulletline: {fileID: 681237547823424470, guid: ae4b87ec8c5a5d64fa06213da857982f,
+    type: 3}
+  bullethoming: {fileID: 3989258070392812923, guid: b8b671c8ff8d33f44964713b7d9e03de,
+    type: 3}
+  range: {fileID: 5484013728498056700}
+  towerRadius: 1.5
+  enemiesInRange: []
+  cooldown: 60
+  cooldownTimer: 0
+  collideboye: {fileID: 0}
 --- !u!1 &9037156787449053567
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,7 +135,8 @@ GameObject:
   - component: {fileID: 3856077505347120779}
   - component: {fileID: 2459865866361433466}
   - component: {fileID: 9011680902855884531}
-  - component: {fileID: 5986632781975489473}
+  - component: {fileID: -3679955439381518567}
+  - component: {fileID: 2227418350574530692}
   m_Layer: 0
   m_Name: Spiral_Building_lv1
   m_TagString: Tower
@@ -184,8 +228,8 @@ MonoBehaviour:
   bullethoming: {fileID: 3989258070392812923, guid: b8b671c8ff8d33f44964713b7d9e03de,
     type: 3}
   scrapcost: 0
-  towerhealth: 10
-  type: 0
+  towerhealth: 15
+  type: 1
   spiral: {fileID: 21300000, guid: 4250b06105a4ae743a2bd557e57ae781, type: 3}
   spiraldmg1: {fileID: 21300000, guid: 391b2af5ec54a88408d559d837ebf20b, type: 3}
   spiraldmg2: {fileID: 21300000, guid: 50be406b68e4de446945bd7c3a934ff1, type: 3}
@@ -195,14 +239,30 @@ MonoBehaviour:
   ice: {fileID: 21300000, guid: e791cbc238be3314c96fc4a98af8400a, type: 3}
   icedmg1: {fileID: 21300000, guid: b27e4767abc63f74e96a38a2687a6230, type: 3}
   icedmg2: {fileID: 21300000, guid: 21787ddf9b1d2bc48a9674ccd20a3988, type: 3}
-  range: {fileID: 5484013728498056700}
-  towerRadius: 1.5
-  enemiesInRange: []
-  cooldown: 1.5
-  cooldownTimer: 0
   collideboye: {fileID: 0}
---- !u!58 &5986632781975489473
-CircleCollider2D:
+--- !u!50 &-3679955439381518567
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9037156787449053567}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &2227418350574530692
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -214,6 +274,16 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.00000014655312, y: 0.0000002931062}
+  m_Offset: {x: 0, y: 0.66800004}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.1}
+    oldSize: {x: 0.67, y: 1.67}
+    newSize: {x: 0.67, y: 1.67}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 1.4353051
+  m_Size: {x: 0.67, y: 1.67}
+  m_EdgeRadius: 0

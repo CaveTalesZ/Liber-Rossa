@@ -52,16 +52,16 @@ public class lineatk : MonoBehaviour
             //Start and end positions for the line renderer
             linerend.SetPosition(0, startline.transform.position);
             linerend.SetPosition(1, endline.transform.position);
-            if (finalcountdown == 0)
+            if (finalcountdown <= 0)
             {
                 Destroy(gameObject);
                 endline.gameObject.GetComponent<EnemyAI>().hitPoints -= bulletDamage;
                 finalcountdown = 30f;
             }
-            //if (anywaycountdown == 0)
-            //{
-            //    Destroy(gameObject);
-            //}
+            if (anywaycountdown <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
         if ((Vector2)transform.position == (Vector2)targetLocation)
         {

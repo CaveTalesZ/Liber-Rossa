@@ -5,9 +5,10 @@ using UnityEngine;
 public class homingatk : MonoBehaviour
 {
     public GameObject tower;
+    public GameObject[] linebullets;
     public bool homing = true;
     public int bulletDamage = 1;
-    public float bulletSpeed = 20.0f;
+    public float bulletSpeed = 50.0f;
     public float rotspeed = 100f;
     public SpriteRenderer spirt;
 
@@ -70,8 +71,16 @@ public class homingatk : MonoBehaviour
         {
             other.gameObject.GetComponent<EnemyAI>().hitPoints -= bulletDamage;
             rend.sharedMaterial = material;
-
+            DestroyLine();
             Destroy(gameObject);
+        }
+    }
+    public void DestroyLine()
+    {
+        linebullets = GameObject.FindGameObjectsWithTag("linebullet");
+        for (int i = 0; i < linebullets.Length; i++)
+        {
+            Destroy(linebullets[i]);
         }
     }
 }

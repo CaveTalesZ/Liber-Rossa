@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class winscreen : MonoBehaviour
 {
     public GameObject audioManager;
-  
     public GameObject row1;
     public GameObject row2;
     public GameObject continueconfirm;

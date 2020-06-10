@@ -17,7 +17,7 @@ public class enemyrange : MonoBehaviour
     public List<GameObject> towersInRange;
 
     // This determines how long it takes before the turret can fire again
-    public float cooldown = 60.0f;
+    public float cooldown = 2.0f;
 
     // This is used
     // it is indeed, whoa

@@ -5,6 +5,7 @@ using UnityEngine;
 public class splashatk : MonoBehaviour
 {
     public GameObject tower;
+    public GameObject[] linebullets;
     public bool splash = true;
     //public int bulletDamage = 1;
     public float bulletSpeed = 20.0f;
@@ -49,6 +50,7 @@ public class splashatk : MonoBehaviour
         if ((Vector2)transform.position == (Vector2)targetLocation)
         {
             Destroy(gameObject);
+
         }
 
 
@@ -67,6 +69,7 @@ public class splashatk : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             Instantiate(explosion, transform.position, transform.rotation);
+            DestroyLine();
             
             //Collider2D[] splashCollider = new Collider2D[10];
             //ContactFilter2D splashFilter = new ContactFilter2D();
@@ -83,6 +86,14 @@ public class splashatk : MonoBehaviour
             //            Destroy(gameObject);
             //    }
             //}
+        }
+    }
+    public void DestroyLine()
+    {
+        linebullets = GameObject.FindGameObjectsWithTag("linebullet");
+        for (int i = 0; i < linebullets.Length; i++)
+        {
+            Destroy(linebullets[i]);
         }
     }
 

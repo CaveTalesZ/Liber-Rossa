@@ -10,6 +10,7 @@ public class MapControl : MonoBehaviour
     public GameObject restartconfirm;
     public GameObject buildselector;
     public GameObject winscreen;
+    public GameObject losescreen;
     public GameObject enemyholder;
     public bool towerbuild;
     public GameObject selector;
@@ -97,6 +98,7 @@ public class MapControl : MonoBehaviour
         enemyholder.SetActive(false);
         buildselector.SetActive(false);
         winscreen.SetActive(false);
+        losescreen.SetActive(false);
         continueconfirm.SetActive(false);
         restartconfirm.SetActive(false);
         towerbuild = false;
@@ -389,6 +391,9 @@ public class MapControl : MonoBehaviour
         winscreen.SetActive(false);
         winscreen.GetComponent<winscreen>().time1 = 90;
         winscreen.GetComponent<winscreen>().time2 = 0;
+        losescreen.SetActive(false);
+        losescreen.GetComponent<losescreen>().time1 = 90;
+        losescreen.GetComponent<losescreen>().time2 = 0;
         enemyholder.SetActive(false);
         selectedSpace = new Vector2(-1, -1);
         selectedRow = -1;
@@ -426,7 +431,7 @@ public class MapControl : MonoBehaviour
                         // Construct the actual tower
                         else
                         {
-                            if (scrap >= scrapcost)
+                            if (scrap >= 10)
                             {
                                 if (tower.GetComponent<TowerAI>().type == TowerAIType.Homing)
                                 {
@@ -440,7 +445,6 @@ public class MapControl : MonoBehaviour
                                 {
                                     scrapcost = 15;
                                 }
-                                Debug.Log("Scrap cost" + " " + scrapcost);
                                 scrap = scrap - scrapcost;  
                                 //putting the tower down
                                 var newTower = Instantiate(tower);
