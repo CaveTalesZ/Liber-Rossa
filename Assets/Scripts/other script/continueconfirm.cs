@@ -23,10 +23,9 @@ public class continueconfirm : MonoBehaviour
             grid.GetComponent<MapControl>().ResetSelector();
             winlosecond.GetComponent<winlosecond>().timerr = 200;
             grid.GetComponent<MapControl>().enemyCount = 0;
-            grid.GetComponent<MapControl>().wavecount += 1;
-            grid.GetComponent<MapControl>().enemyCap += 2;
-            grid.GetComponent<MapControl>().spawnedBigGuy = false;
-
+            FindObjectOfType<AudioManager>().Stop("WaveMusic");
+            FindObjectOfType<AudioManager>().Play("Ambience");
+            
         }
         if (Input.GetKeyDown("left"))
         {
