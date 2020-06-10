@@ -57,7 +57,7 @@ public class pausemenuthing : MonoBehaviour
         {
             Debug.Log("hammunah");
             SceneManager.LoadScene("Main Menu");
-            FindObjectOfType<AudioManager>().Stop("BuildMusic");
+            FindObjectOfType<AudioManager>().Stop("Ambience");
         }
         if ((Input.GetKeyDown("left")) && (option1.activeSelf == true))
         {
@@ -71,6 +71,8 @@ public class pausemenuthing : MonoBehaviour
             gridcontainer.GetComponent<MapControl>().waveActive = true;
             gridcontainer.GetComponent<MapControl>().enemyCap += 2;
             gameObject.SetActive(false);
+            FindObjectOfType<AudioManager>().Stop("Ambience");
+            FindObjectOfType<AudioManager>().Play("WaveMusic");
         }
     }
 }

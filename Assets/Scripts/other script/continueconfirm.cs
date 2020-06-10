@@ -23,6 +23,8 @@ public class continueconfirm : MonoBehaviour
             grid.GetComponent<MapControl>().ResetSelector();
             winlosecond.GetComponent<winlosecond>().timerr = 200;
             grid.GetComponent<MapControl>().enemyCount = 0;
+            FindObjectOfType<AudioManager>().Stop("WaveMusic");
+            FindObjectOfType<AudioManager>().Play("Ambience");
             
         }
         if (Input.GetKeyDown("left"))

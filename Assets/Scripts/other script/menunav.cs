@@ -26,6 +26,8 @@ public class menunav : MonoBehaviour
         row1.SetActive(true);
         row2.SetActive(false);
         FindObjectOfType<AudioManager>().Play("MainTheme");
+        FindObjectOfType<AudioManager>().Stop("Ambience");
+        FindObjectOfType<AudioManager>().Stop("WaveMusic");
     }
 
     // Update is called once per frame
@@ -68,7 +70,7 @@ public class menunav : MonoBehaviour
             SceneManager.LoadScene("Game");
             FindObjectOfType<AudioManager>().Stop("MainTheme");
             FindObjectOfType<AudioManager>().Play("Select");
-            FindObjectOfType<AudioManager>().Play("BuildMusic");
+            FindObjectOfType<AudioManager>().Play("Ambience");
         }
         if((Input.GetKeyDown("right")) && (row2.activeSelf == true))
         {

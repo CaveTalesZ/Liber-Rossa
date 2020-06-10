@@ -19,7 +19,7 @@ public class howtoplaynav : MonoBehaviour
             SceneManager.LoadScene("Game");
             FindObjectOfType<AudioManager>().Play("Select");
             FindObjectOfType<AudioManager>().Stop("MainTheme");
-            FindObjectOfType<AudioManager>().Play("BuildMusic");
+            FindObjectOfType<AudioManager>().Play("Ambience");
         }
         if (Input.GetKeyDown("left"))
         {
