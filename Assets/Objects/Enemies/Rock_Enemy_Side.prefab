@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   losecondition: {fileID: 0}
-  hitPoints: 5
+  hitPoints: 4
   walkpointContainer: {fileID: 8536446997833168069, guid: 21a8a33bbfe574c4d94075afbab1d8aa,
     type: 3}
   moveSpeed: 40
@@ -354,5 +354,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 4845456130713881715}
   animator: {fileID: -8731894373674248321}
-  movementx: 0
-  movementy: 0
+  movement: {x: 0, y: 0, z: 0}

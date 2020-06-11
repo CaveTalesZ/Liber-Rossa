@@ -83,6 +83,7 @@ public class TowerAIRANGE : MonoBehaviour
             bulletScript3.targettorotate = target.transform;
             bulletScript3.startline = gameObject;
             bulletScript3.endline = target;
+            cooldown = 0.8f;
         }  
         
     }

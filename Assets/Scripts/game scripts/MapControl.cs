@@ -71,19 +71,19 @@ public class MapControl : MonoBehaviour
     private bool showBuildMenu = false;
 
     // The camera for the scene, where it starts, and how far and quickly to move it
-    public GameObject camera;
+    //public GameObject camera;
     private Vector3 initialCameraPosition;
     public int cameraPanDistance;
     public int cameraSpeed;
 
     // The left and right UI elements
-    public GameObject UILeft;
-    public GameObject UIRight;
-    public GameObject UISelector;
-    private Vector3 UILeftStart;
-    private Vector3 UIRightStart;
-    private bool moveLeft;
-    private bool generatedUI = false;
+    //public GameObject UILeft;
+    //public GameObject UIRight;
+    //public GameObject UISelector;
+    //private Vector3 UILeftStart;
+    //private Vector3 UIRightStart;
+    //private bool moveLeft;
+    //private bool generatedUI = false;
 
     // List of all buildings to be used in UI menus
     public List<GameObject> buildingList;
@@ -103,9 +103,9 @@ public class MapControl : MonoBehaviour
         restartconfirm.SetActive(false);
         towerbuild = false;
         backtomenu.SetActive(false);
-        initialCameraPosition = camera.transform.position;
-        UILeftStart = UILeft.transform.parent.position;
-        UIRightStart = UIRight.transform.parent.position;
+        //initialCameraPosition = camera.transform.position;
+        //UILeftStart = UILeft.transform.parent.position;
+        //UIRightStart = UIRight.transform.parent.position;
 
         if (selector == null)
         {
@@ -291,33 +291,33 @@ public class MapControl : MonoBehaviour
             // ### This section contains all code relating to the buildmenu ###
             if (showBuildMenu)
             {
-                UISelector.SetActive(true);
-                moveLeft = selectedZone % 2 != 0;
-                BuildMenuOpen(moveLeft, buildingList);
-                if (Input.GetKeyDown("left"))
-                {
-                    showBuildMenu = false;
-                }
+                //UISelector.SetActive(true);
+                //moveLeft = selectedZone % 2 != 0;
+                //BuildMenuOpen(moveLeft, buildingList);
+                //if (Input.GetKeyDown("left"))
+                //{
+                //    showBuildMenu = false;
+                //}
             }
-            else if (camera.transform.position.x != initialCameraPosition.x)
-            {
-                if (UISelector.activeSelf)
-                {
-                    ResetSelector();
-                }
-                UISelector.SetActive(false);
-                BuildMenuClose();
+            //else if (camera.transform.position.x != initialCameraPosition.x)
+            //{
+            //    if (UISelector.activeSelf)
+            //    {
+            //        ResetSelector();
+            //    }
+            //    UISelector.SetActive(false);
+            //    BuildMenuClose();
 
-            }
-            else if(generatedUI)
-            {
-                UISelector.transform.SetParent(buildOptions[0].transform);
-                for (var i = 1; i < buildOptions.Count; i++)
-                {
-                    Destroy(buildOptions[i]);
-                }
-                generatedUI = false;
-            }
+            //}
+            //else if(generatedUI)
+            //{
+            //    UISelector.transform.SetParent(buildOptions[0].transform);
+            //    for (var i = 1; i < buildOptions.Count; i++)
+            //    {
+            //        Destroy(buildOptions[i]);
+            //    }
+            //    generatedUI = false;
+            //}
 
         }
         // Wave phase
@@ -431,20 +431,21 @@ public class MapControl : MonoBehaviour
                         // Construct the actual tower
                         else
                         {
-                            if (scrap >= 10)
+                            if (tower.GetComponent<TowerAI>().type == TowerAIType.Homing)
                             {
-                                if (tower.GetComponent<TowerAI>().type == TowerAIType.Homing)
-                                {
-                                    scrapcost = 10;
-                                }
-                                if (tower.GetComponent<TowerAI>().type == TowerAIType.Splash)
-                                {
-                                    scrapcost = 20;
-                                }
-                                if (tower.GetComponent<TowerAI>().type == TowerAIType.Line)
-                                {
-                                    scrapcost = 15;
-                                }
+                                scrapcost = 10;
+                            }
+                            if (tower.GetComponent<TowerAI>().type == TowerAIType.Splash)
+                            {
+                                scrapcost = 20;
+                            }
+                            if (tower.GetComponent<TowerAI>().type == TowerAIType.Line)
+                            {
+                                scrapcost = 15;
+                            }
+                            if (scrap >= 10 && scrap >= scrapcost)
+                            {
+
                                 scrap = scrap - scrapcost;  
                                 //putting the tower down
                                 var newTower = Instantiate(tower);
@@ -481,152 +482,149 @@ public class MapControl : MonoBehaviour
         return result3;
     }
 
-    GameObject UIElement;
-    int direction;
-    List<GameObject> buildOptions = new List<GameObject>();
-    void BuildMenuOpen(bool left, List<GameObject> options)
-    {
-        // Generates a list of UI elements
-        if (!generatedUI)
-        {
-            if (left)
-            {
-                UIElement = UILeft;
-            }
-            else
-            {
-                UIElement = UIRight;
-            }
+    //GameObject UIElement;
+    //int direction;
+    //List<GameObject> buildOptions = new List<GameObject>();
+    //void BuildMenuOpen(bool left, List<GameObject> options)
+    //{
+    //    // Generates a list of UI elements
+    //    if (!generatedUI)
+    //    {
+    //        if (left)
+    //        {
+    //            UIElement = UILeft;
+    //        }
+    //        else
+    //        {
+    //            UIElement = UIRight;
+    //        }
 
-            timer = selectionTime;
+    //        timer = selectionTime;
 
-            buildOptions = new List<GameObject>();
+    //        buildOptions = new List<GameObject>();
 
             
 
-            UIElement.transform.position = new Vector3(UIElement.transform.position.x, (float)25 * (options.Count - 1), UIElement.transform.position.z);
-            for (var i = 0; i < options.Count; i++)
-            {
-                if (i == 0)
-                {
-                    buildOptions.Add(UIElement);
-                }
-                else
-                {
-                    buildOptions.Add(Instantiate(
-                        UIElement,
-                        new Vector3(
-                            UIElement.transform.position.x,
-                            (float)25 * (options.Count - 1) - (float)50 * i,
-                            UIElement.transform.position.z
-                        ),
-                        UIElement.transform.rotation,
-                        UIElement.transform.parent
-                        ));
-                }
-            }
-            if (buildOptions.Count == 0)
-            {
-                Debug.LogError("No building options!");
-            }
-            selectedOption = 0;
-            UISelector.transform.SetParent(buildOptions[selectedOption].transform);
-            UISelector.transform.localPosition = new Vector3(0, 0, -1);
-            UISelector.transform.localScale = new Vector3(1, 1, 1);
-            generatedUI = true;
+    //        UIElement.transform.position = new Vector3(UIElement.transform.position.x, (float)25 * (options.Count - 1), UIElement.transform.position.z);
+    //        for (var i = 0; i < options.Count; i++)
+    //        {
+    //            if (i == 0)
+    //            {
+    //                buildOptions.Add(UIElement);
+    //            }
+    //            else
+    //            {
+    //                buildOptions.Add(Instantiate(
+    //                    UIElement,
+    //                    new Vector3(
+    //                        UIElement.transform.position.x,
+    //                        (float)25 * (options.Count - 1) - (float)50 * i,
+    //                        UIElement.transform.position.z
+    //                    ),
+    //                    UIElement.transform.rotation,
+    //                    UIElement.transform.parent
+    //                    ));
+    //            }
+    //        }
+    //        if (buildOptions.Count == 0)
+    //        {
+    //            Debug.LogError("No building options!");
+    //        }
+    //        selectedOption = 0;
+            //UISelector.transform.SetParent(buildOptions[selectedOption].transform);
+            //UISelector.transform.localPosition = new Vector3(0, 0, -1);
+            //UISelector.transform.localScale = new Vector3(1, 1, 1);
+            //generatedUI = true;
         }
         // Moves the camera to the proper position
-        if (camera.transform.position.x != initialCameraPosition.x + cameraPanDistance && camera.transform.position.x != initialCameraPosition.x - cameraPanDistance)
-        {
-            direction = (left ? 1 : 0) * 2 - 1;
-            camera.transform.position = Vector3.MoveTowards(
-                camera.transform.position,
-                new Vector3(
-                    initialCameraPosition.x - direction * cameraPanDistance,
-                    initialCameraPosition.y,
-                    initialCameraPosition.z),
-                cameraSpeed * Time.deltaTime);
-            if (left)
-            {
+        //if (camera.transform.position.x != initialCameraPosition.x + cameraPanDistance && camera.transform.position.x != initialCameraPosition.x - cameraPanDistance)
+        //{
+        //    direction = (left ? 1 : 0) * 2 - 1;
+        //    camera.transform.position = Vector3.MoveTowards(
+        //        camera.transform.position,
+        //        new Vector3(
+        //            initialCameraPosition.x - direction * cameraPanDistance,
+        //            initialCameraPosition.y,
+        //            initialCameraPosition.z),
+        //        cameraSpeed * Time.deltaTime);
+            //if (left)
+            //{
                 
-                UILeft.transform.parent.position = Vector3.MoveTowards(
-                UILeft.transform.parent.position,
-                new Vector3(
-                    UILeftStart.x + cameraPanDistance,
-                    UILeftStart.y,
-                    UILeftStart.z
-                    ),
-                cameraSpeed * Time.deltaTime);
-            }
-            else
-            {
+            //    UILeft.transform.parent.position = Vector3.MoveTowards(
+            //    UILeft.transform.parent.position,
+            //    new Vector3(
+            //        UILeftStart.x + cameraPanDistance,
+            //        UILeftStart.y,
+            //        UILeftStart.z
+            //        ),
+            //    cameraSpeed * Time.deltaTime);
+            //}
+    //        else
+    //        {
                 
-                UIRight.transform.parent.position = Vector3.MoveTowards(
-                UIRight.transform.parent.position,
-                new Vector3(
-                    UIRightStart.x - cameraPanDistance,
-                    UIRightStart.y,
-                    UIRightStart.z
-                    ),
-                cameraSpeed * Time.deltaTime);
-            }
-        }
-        // Scrolls through UI
-        else
-        {
-            Debug.Log("Counting down the seconds");
-            timer -= Time.deltaTime;
-            if (timer <= 0)
-            {
-                selectedOption += 1;
-                if (buildOptions.Count != 0)
-                {
-                    selectedOption = selectedOption % buildOptions.Count;
-                }
-                else
-                {
-                    Debug.LogError("No building options!");
-                }
-                UISelector.transform.SetParent(buildOptions[selectedOption].transform);
-                UISelector.transform.localPosition = new Vector3(0, 0, -1);
-                timer = selectionTime;
-            }
-            if (Input.GetKeyDown("right"))
-            {
-                BuildTower(selectedSpace, buildingList[selectedOption]);
-            }
-        }
-    }
+    //            UIRight.transform.parent.position = Vector3.MoveTowards(
+    //            UIRight.transform.parent.position,
+    //            new Vector3(
+    //                UIRightStart.x - cameraPanDistance,
+    //                UIRightStart.y,
+    //                UIRightStart.z
+    //                ),
+    //            cameraSpeed * Time.deltaTime);
+    //        }
+    //    }
+    //    // Scrolls through UI
+    //    else
+    //    {
+    //        Debug.Log("Counting down the seconds");
+    //        timer -= Time.deltaTime;
+    //        if (timer <= 0)
+    //        {
+    //            selectedOption += 1;
+    //            if (buildOptions.Count != 0)
+    //            {
+    //                selectedOption = selectedOption % buildOptions.Count;
+    //            }
+    //            else
+    //            {
+    //                Debug.LogError("No building options!");
+    //            }
+    //            UISelector.transform.SetParent(buildOptions[selectedOption].transform);
+    //            UISelector.transform.localPosition = new Vector3(0, 0, -1);
+    //            timer = selectionTime;
+    //        }
+    //        if (Input.GetKeyDown("right"))
+    //        {
+    //            BuildTower(selectedSpace, buildingList[selectedOption]);
+    //        }
+    //    }
+    //}
 
 
-    void BuildMenuClose()
-    {
-        camera.transform.position = Vector3.MoveTowards(
-            camera.transform.position,
-            new Vector3(
-                initialCameraPosition.x,
-                initialCameraPosition.y,
-                initialCameraPosition.z),
-            cameraSpeed * Time.deltaTime);
+    //void BuildMenuClose()
+    //{
+    //    camera.transform.position = Vector3.MoveTowards(
+    //        camera.transform.position,
+    //        new Vector3(
+    //            initialCameraPosition.x,
+    //            initialCameraPosition.y,
+    //            initialCameraPosition.z),
+    //        cameraSpeed * Time.deltaTime);
 
-        UILeft.transform.parent.position = Vector3.MoveTowards(
-            UILeft.transform.parent.position,
-            new Vector3(
-                UILeftStart.x,
-                UILeftStart.y,
-                UILeftStart.z
-                ),
-            cameraSpeed * Time.deltaTime);
+    //    //UILeft.transform.parent.position = Vector3.MoveTowards(
+    //    //    UILeft.transform.parent.position,
+    //    //    new Vector3(
+    //    //        UILeftStart.x,
+    //    //        UILeftStart.y,
+    //    //        UILeftStart.z
+    //    //        ),
+    //    //    cameraSpeed * Time.deltaTime);
 
-        UIRight.transform.parent.position = Vector3.MoveTowards(
-            UIRight.transform.parent.position,
-            new Vector3(
-                UIRightStart.x,
-                UIRightStart.y,
-                UIRightStart.z
-                ),
-            cameraSpeed * Time.deltaTime);
+    //    //UIRight.transform.parent.position = Vector3.MoveTowards(
+    //    //    UIRight.transform.parent.position,
+    //    //    new Vector3(
+    //    //        UIRightStart.x,
+    //    //        UIRightStart.y,
+    //    //        UIRightStart.z
+    //    //        ),
+    //    //    cameraSpeed * Time.deltaTime);
 
-        
-    }
-}

@@ -227,8 +227,9 @@ MonoBehaviour:
     type: 3}
   bullethoming: {fileID: 3989258070392812923, guid: b8b671c8ff8d33f44964713b7d9e03de,
     type: 3}
+  grid: {fileID: 0}
   scrapcost: 0
-  towerhealth: 15
+  towerhealth: 10
   type: 1
   spiral: {fileID: 21300000, guid: 4250b06105a4ae743a2bd557e57ae781, type: 3}
   spiraldmg1: {fileID: 21300000, guid: 391b2af5ec54a88408d559d837ebf20b, type: 3}
