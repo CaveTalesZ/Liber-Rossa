@@ -80,6 +80,7 @@ GameObject:
   - component: {fileID: 262476599885436416}
   - component: {fileID: -4074941007257175857}
   - component: {fileID: -5902476116046453979}
+  - component: {fileID: 6976442348396458801}
   - component: {fileID: -8731894373674248321}
   - component: {fileID: 4576846098458693687}
   m_Layer: 0
@@ -193,6 +194,21 @@ MonoBehaviour:
     type: 3}
   moveSpeed: 30
   grid: {fileID: 0}
+--- !u!114 &6976442348396458801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4845456130713881715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 689ef109563526b489bf68c936b4e7c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 4845456130713881715}
+  animator: {fileID: -8731894373674248321}
+  movement: {x: 0, y: 0, z: 0}
 --- !u!95 &-8731894373674248321
 Animator:
   serializedVersion: 3
@@ -203,7 +219,7 @@ Animator:
   m_GameObject: {fileID: 4845456130713881715}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 660a9a51a321ddc4f985cafba24e02ce, type: 2}
+  m_Controller: {fileID: 9100000, guid: e4e109c09f6140a438001ceb89cba96f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
