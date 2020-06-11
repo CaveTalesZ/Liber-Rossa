@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class retryconfirm : MonoBehaviour
 {
-    public int wait = 10;
     public GameObject grid;
     public GameObject losescreen;
     public GameObject winlosecond;
@@ -30,7 +29,7 @@ public class retryconfirm : MonoBehaviour
         }
         if (Input.GetKeyDown("left"))
         {
-            wait = wait - 1;
+            losescreen.GetComponent<losescreen>().waitaframe = 10;
             losescreen.GetComponent<losescreen>().enabled = true;
             losescreen.GetComponent<losescreen>().time1 = 90;
             losescreen.GetComponent<losescreen>().time2 = 0;
