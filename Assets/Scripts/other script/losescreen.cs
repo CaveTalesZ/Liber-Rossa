@@ -15,6 +15,7 @@ public class losescreen : MonoBehaviour
     public int time1;
     public int time2;
     public int wavestate;
+    public int waitaframe = 10;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,9 +27,14 @@ public class losescreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((Input.GetKeyDown("left")) && (restartscreen.GetComponent<restartconfirm>().wait == 0))
+        if (restartscreen.activeSelf == false && retryscreen.activeSelf == false)
         {
-            SceneManager.LoadScene("Main Menu");
+            waitaframe = waitaframe - 1;
+            if (Input.GetKeyDown("left") && waitaframe <= 0)
+            {
+                waitaframe = 10;
+                SceneManager.LoadScene("Main Menu");
+            }
         }
         //autoscroll;
         if (row1.activeSelf == true)

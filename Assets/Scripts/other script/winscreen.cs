@@ -15,6 +15,7 @@ public class winscreen : MonoBehaviour
     public int time1;
     public int time2;
     public int wavestate;
+    public int waitaframe = 10;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,9 +36,14 @@ public class winscreen : MonoBehaviour
         {
             wavestate = 0;
         }
-        if ((Input.GetKeyDown("left")) && (restartconfirm.GetComponent<restartconfirm>().wait == 0) && (continueconfirm.GetComponent<continueconfirm>().wait == 0))
+        if (restartconfirm.activeSelf == false && continueconfirm.activeSelf == false)
         {
-            SceneManager.LoadScene("Main Menu");
+            waitaframe = waitaframe - 1;
+            if (Input.GetKeyDown("left") && waitaframe <= 0)
+            {
+                waitaframe = 10;
+                SceneManager.LoadScene("Main Menu");
+            }
         }
         //autoscroll;
         if (row1.activeSelf == true)
@@ -69,14 +75,12 @@ public class winscreen : MonoBehaviour
         {
             //gameObject.SetActive(false);
             continueconfirm.SetActive(true);
-            continueconfirm.GetComponent<continueconfirm>().wait = 10;
             gameObject.GetComponent<winscreen>().enabled = false;
 
         }
         if ((Input.GetKeyDown("right")) && (row2.activeSelf == true))
         {
             restartconfirm.SetActive(true);
-            restartconfirm.GetComponent<restartconfirm>().wait = 10;
             gameObject.GetComponent<winscreen>().enabled = false;
             
         }

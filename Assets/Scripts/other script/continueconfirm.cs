@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class continueconfirm : MonoBehaviour
 {
-    public int wait = 10;
     public GameObject grid;
     public GameObject winscreen;
     public GameObject winlosecond;
@@ -32,7 +31,7 @@ public class continueconfirm : MonoBehaviour
         }
         if (Input.GetKeyDown("left"))
         {
-            wait = wait - 1;
+            winscreen.GetComponent<winscreen>().waitaframe = 10;
             winscreen.GetComponent<winscreen>().enabled = true;
             winscreen.GetComponent<winscreen>().time1 = 90;
             winscreen.GetComponent<winscreen>().time2 = 0;
