@@ -51,12 +51,6 @@ public class enemyshoot : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    // Rotate the bullet towards the target
-    //gameObject.transform.eulerAngles = new Vector3(
-    //    transform.rotation.x, 
-    //    transform.rotation.y,
-    //    Vector2.SignedAngle(0, targetLocation - transform.position)
-    //);
 
     void OnTriggerEnter2D(Collider2D other)
     {
